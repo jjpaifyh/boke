@@ -1,0 +1,3 @@
+http://localhost:3000/artist/top/song?id=6452  //获取周杰伦歌单列表 前50首 ？可以拿到图片但是图片有点怪
+
+http://localhost:3000/song/url?id=298110  //获取歌曲url
