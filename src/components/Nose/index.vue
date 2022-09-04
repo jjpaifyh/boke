@@ -1,37 +1,56 @@
 <!--  -->
 <template>
   <div class="index">
+    <DropDown></DropDown>
     <!-- 导航栏 -->
-    <div class="nev">
+    <div class="nev Gd">
       <div class="iconfont">&#xe639;首页</div>
       <div class="iconfont">&#xe661;文章</div>
-      <div class="iconfont">&#xe610;工具</div>
+      <div class="iconfont">
+        &#xe610;工具
+        <div class="div_box">
+          <div>游戏世界</div>
+          <div>正则校验器</div>
+        </div>
+      </div>
       <div class="iconfont">&#xe8e1;友链</div>
-      <div class="iconfont">&#xeca1;茶话会</div>
+      <div class="iconfont">
+        &#xeca1;茶话会
+        <div class="div_box">
+          <div @click="go_music()">音乐</div>
+          <div>动漫</div>
+        </div>
+      </div>
       <div class="iconfont">&#xe615;留言</div>
       <div class="iconfont">&#xe614;关于</div>
     </div>
     <!-- 特效文字栏 -->
-    <div class="master">
+    <div class="master GP">
       <h2>鹏の小さな巣</h2>
       <h4 id="text"></h4>
     </div>
-    >
   </div>
 </template>
 
 <script>
+import DropDown from "../DropDown";
+// import DropDown from "./components/DropDown";
 export default {
   name: "index",
   data() {
     return {};
   },
+  components: { DropDown },
   //监听属性 类似于data概念
   computed: {},
   //监控data中的数据变化
   watch: {},
   //方法集合
-  methods: {},
+  methods: {
+    go_music() {
+      this.$router.push("/music");
+    },
+  },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
@@ -94,8 +113,9 @@ export default {
   justify-content: center;
   align-content: center;
 }
-.nev div {
+.nev > div {
   width: 8vw;
+  overflow: hidden;
   /* background-color: blueviolet; */
   margin: 0px 20px 0px 20px;
   text-align: center;
@@ -105,8 +125,9 @@ export default {
   color: rgb(248, 248, 248);
 }
 .nev div:hover {
-  background-color: #fff;
+  background-color: rgb(248, 248, 248, 0.7);
   color: #000;
+  overflow: visible;
 }
 .master {
   /* background-color: #fff; */
@@ -135,5 +156,23 @@ export default {
       format("woff"),
     url("//at.alicdn.com/t/c/font_3597971_np5hh6o3q1.ttf?t=1660830585154")
       format("truetype");
+}
+.Gd {
+  position: fixed;
+  top: 0;
+  z-index: 3;
+}
+.GP {
+  position: absolute;
+  z-index: 2;
+}
+.div_box {
+  display: flex;
+  text-align: center;
+  width: 8vw;
+  height: 82px;
+  flex-direction: column;
+  color: rgb(0, 0, 0);
+  background-color: rgb(248, 248, 248, 0.7);
 }
 </style>

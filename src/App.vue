@@ -74,7 +74,6 @@ export default {
   box-sizing: border-box;
 }
 html {
-  cursor: url("./assets/3de7783ff0504ff8d8fe58f3fac0bb0f1hcQ93M61UEd8XMC-1.png"),
-    default;
+  cursor: url("./assets/sb.png"), default;
 }
 </style>
