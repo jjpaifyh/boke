@@ -6,13 +6,10 @@
 
 <script>
 import PlayerBox from "./components/PlayerBox";
-import axios from "axios";
 export default {
   name: "Player",
   data() {
-    return {
-      songlist: [],
-    };
+    return {};
   },
   components: { PlayerBox },
   //监听属性 类似于data概念
@@ -22,22 +19,10 @@ export default {
   //方法集合
   methods: {},
   //生命周期 - 创建完成（可以访问当前this实例）
-  created() {
-    // axios({
-    //   method: "get",
-    //   url: "http://localhost:3000/artist/top/song",
-    //   params: {
-    //     // 周杰伦
-    //     id: 6452,
-    //   },
-    // }).then((res) => {
-    //   this.songlist = res.data.songs;
-    //   console.log(this.songlist);
-    // });
-  },
+  created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
-  //beforeCreate() {}, //生命周期 - 创建之前
+  beforeCreate() {}, //生命周期 - 创建之前
   //beforeMount() {}, //生命周期 - 挂载之前
   //beforeUpdate() {}, //生命周期 - 更新之前
   //updated() {}, //生命周期 - 更新之后
@@ -47,10 +32,12 @@ export default {
 };
 </script>
 <style scoped>
-.Player {
+.Player::before {
+  content: "";
+  display: inline-block;
   width: 100vw;
-  height: 100vh;
-  background: url("https://images.pexels.com/photos/844297/pexels-photo-844297.jpeg?cs=srgb&dl=pexels-eberhard-grossgasteiger-844297.jpg&fm=jpg")
+  height: 95vh;
+  background: url("https://p1.music.126.net/dDgHDWlJAFwkMNrjbQExIA==/109951165959446596.jpg")
     no-repeat;
   background-size: 100%;
   overflow: hidden;
