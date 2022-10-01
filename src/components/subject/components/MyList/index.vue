@@ -1,8 +1,11 @@
 <template>
-  <div :class="is_tf ? 'MyList' : 'MyList flox'">MyList</div>
+  <div :class="is_tf ? 'MyList' : 'MyList flox'">
+    <My></My>
+  </div>
 </template>
 
 <script>
+import My from "../My/index.vue";
 export default {
   name: "MyList",
   data() {
@@ -12,6 +15,7 @@ export default {
     };
   },
   //监听属性 类似于data概念
+  components: { My },
   computed: {},
   //监控data中的数据变化
   watch: {
@@ -61,8 +65,9 @@ export default {
 .MyList {
   width: 20vw;
   height: 1000px;
-  background-color: rgb(231, 240, 240);
-  border-radius: 20px;
+  /* background-color: rgb(231, 240, 240); */
+  background-color: #f5f5f5;
+  /* border-radius: 20px; */
   margin: 15px 15px 15px 0px;
 }
 .flox {

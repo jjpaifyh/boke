@@ -5,12 +5,17 @@ const Home = () =>
     import ("../views/Home.vue")
 const Music = () =>
     import ("../views/Music.vue")
-
+const Game=()=>
+    import("../views/Game.vue")
+const Gluttonous=()=>
+    import("../components/Gluttonous/index.vue")
 Vue.use(VueRouter)
+const Cartoon=()=>
+    import("../views/Cartoon.vue")
 
 const routes = [
   {
-    path: "",
+    path: "/",
     redirect: '/home'
   },
   {
@@ -22,7 +27,25 @@ const routes = [
     path: '/music',
     name: 'Music',
     component: Music
-  }
+  },
+  {
+    path: '/game',
+    name: 'Game',
+    component: Game,
+  },
+  {
+    path:'/Game/Gluttonous',
+    name:"Gluttonous",
+    component:Gluttonous
+
+  },
+  {
+    path:'/Cartoon',
+    name:"Cartoon",
+    component:Cartoon
+
+  },
+
 ]
 
 const router = new VueRouter({

@@ -1,0 +1,84 @@
+<!--  -->
+<template>
+  <!-- <div class="">
+    <title>获取图片的base64编码</title>
+    <input type="file" name="file" id="inputBox" @change="update($event)" />
+    <img src="" alt="" />
+  </div> -->
+  <form
+    action="http://localhost:2000/list_post"
+    method="post"
+    enctype="multipart/form-data"
+    style="text-align: center"
+    class="well form-inline center"
+  >
+    <input
+      type="text"
+      name="gtitle"
+      placeholder="请输入标题"
+      class="span7"
+    /><br /><br />
+
+    <input
+      type="text"
+      name="post"
+      placeholder="请输入描述内容"
+      class="span7"
+    /><br /><br />
+
+    <div>
+      <input type="file" class="input-xlarge" name="goodsimage" />
+    </div>
+
+    <button type="submit" class="btn btn-success" style="margin-top: 20px">
+      <i class="icon-plus icon-white"></i>添加
+    </button>
+  </form>
+</template>
+
+<script>
+import { Base64 } from "js-base64";
+import axios from "axios";
+export default {
+  name: "",
+  data() {
+    return {};
+  },
+  //监听属性 类似于data概念
+  computed: {},
+  //监控data中的数据变化
+  watch: {},
+  //方法集合
+  methods: {
+    // update(e) {
+    //   // test.js
+    //   let inputBox = e.target;
+    //   // var inputBox = document.getElementById("inputBox");
+    //   var reader = new FileReader();
+    //   reader.readAsDataURL(inputBox.files[0]);
+    //   reader.onload = function () {
+    //     // console.log(reader.result);
+    //     var data = reader.result.replace(/^data:image\/png;base64,/g, "");
+    //     console.log(data);
+    //     // 发送请求，或是存起来最后一起发
+    //     axios.post("http://localhost:2000/post", {}).then((res) => {
+    //       console.log(res);
+    //     });
+    //   };
+    // },
+  },
+  //生命周期 - 创建完成（可以访问当前this实例）
+  created() {},
+  //生命周期 - 挂载完成（可以访问DOM元素）
+  mounted() {},
+  //beforeCreate() {}, //生命周期 - 创建之前
+  //beforeMount() {}, //生命周期 - 挂载之前
+  //beforeUpdate() {}, //生命周期 - 更新之前
+  //updated() {}, //生命周期 - 更新之后
+  //beforeDestroy() {}, //生命周期 - 销毁之前
+  //destroyed() {}, //生命周期 - 销毁完成
+  //activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
+};
+</script>
+<style scoped>
+</style>

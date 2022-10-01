@@ -9,16 +9,16 @@
       <div class="iconfont">
         &#xe610;工具
         <div class="div_box">
-          <div>游戏世界</div>
           <div>正则校验器</div>
         </div>
       </div>
       <div class="iconfont">&#xe8e1;友链</div>
       <div class="iconfont">
         &#xeca1;茶话会
-        <div class="div_box">
+        <div class="div_box san">
           <div @click="go_music()">音乐</div>
-          <div>动漫</div>
+          <div @click="goGame()">游戏世界</div>
+          <div @click="go_Cartoon()">动漫</div>
         </div>
       </div>
       <div class="iconfont">&#xe615;留言</div>
@@ -49,6 +49,12 @@ export default {
   methods: {
     go_music() {
       this.$router.push("/music");
+    },
+    goGame() {
+      this.$router.push("/Game");
+    },
+    go_Cartoon() {
+      this.$router.push("/Cartoon");
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -100,8 +106,7 @@ export default {
   position: relative;
   height: 320px;
   width: 100%;
-  background: url(https://img.moedog.org/images/2019/08/21/site_head.png)
-    no-repeat;
+  background: url("http://localhost:2000/api/head") no-repeat;
   background-size: 100%;
   background-position: center center;
 }
@@ -170,9 +175,12 @@ export default {
   display: flex;
   text-align: center;
   width: 8vw;
-  height: 82px;
+  height: 41px;
   flex-direction: column;
   color: rgb(0, 0, 0);
   background-color: rgb(248, 248, 248, 0.7);
+}
+.san {
+  height: 123px;
 }
 </style>
