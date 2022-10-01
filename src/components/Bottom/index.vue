@@ -1,29 +1,15 @@
+<!--  -->
 <template>
-  <div class="index">
-    <div>
-      <ListData />
-      <ListData />
-      <ListData />
-      <ListData />
-      <ListData />
-    </div>
-    <div>
-      <MyList />
-    </div>
+  <div class="bottom">
+    <div></div>
   </div>
 </template>
 
 <script>
-import MyList from "./components/MyList";
-import ListData from "./components/ListData";
 export default {
-  name: "index",
+  name: "bottom",
   data() {
     return {};
-  },
-  components: {
-    ListData,
-    MyList,
   },
   //监听属性 类似于data概念
   computed: {},
@@ -45,11 +31,9 @@ export default {
 };
 </script>
 <style scoped>
-.index {
-  width: 70vw;
-  /* height: 500px; */
-  background-color: #f5f5f5;
-  margin: auto;
-  display: flex;
+.bottom {
+  width: 100%;
+  height: 150px;
+  background-color: rgba(52, 52, 52, 1);
 }
 </style>
