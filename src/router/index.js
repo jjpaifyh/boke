@@ -9,9 +9,15 @@ const Game=()=>
     import("../views/Game.vue")
 const Gluttonous=()=>
     import("../components/Gluttonous/index.vue")
-Vue.use(VueRouter)
+const Particulars=()=>
+  import('../views/Particulars.vue')
+const Play_m=()=>
+  import('../views/Play_m.vue')
+
 const Cartoon=()=>
     import("../views/Cartoon.vue")
+Vue.use(VueRouter)
+
 
 const routes = [
   {
@@ -43,6 +49,18 @@ const routes = [
     path:'/Cartoon',
     name:"Cartoon",
     component:Cartoon
+
+  },
+  {
+    path:'/Particulars',
+    name:"Particulars",
+    component:Particulars
+
+  },
+  {
+    path:'/Play_m',
+    name:"Play_m",
+    component:Play_m
 
   },
 
