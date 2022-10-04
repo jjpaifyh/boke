@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import "@/assets/iconfont/iconfont.css";
 import "@/assets/css/csh.css";
+// import 'video.js/dist/video-js.css'; // video.js样式
+
 
 
 Vue.config.productionTip = false
