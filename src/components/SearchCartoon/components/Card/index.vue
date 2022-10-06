@@ -4,7 +4,7 @@
     <div class="label" v-show="datas.videoType">
       {{ datas.videoType.split(",")[0] }}
     </div>
-    <img :src="datas.cover" alt="" />
+    <img v-lazy="datas.cover" />
     <p>{{ datas.title }}</p>
   </div>
 </template>
@@ -38,14 +38,10 @@ export default {
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
-  //beforeCreate() {}, //生命周期 - 创建之前
-  //beforeMount() {}, //生命周期 - 挂载之前
-  //beforeUpdate() {}, //生命周期 - 更新之前
-  //updated() {}, //生命周期 - 更新之后
-  //beforeDestroy() {}, //生命周期 - 销毁之前
-  //destroyed() {}, //生命周期 - 销毁完成
-  //activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
+  mounted() {
+    // console.log(1111);
+    // console.log(this.datas);
+  },
 };
 </script>
 <style scoped>
@@ -84,6 +80,7 @@ p {
   position: absolute;
   left: -6%;
   top: 2vw;
+  font-size: 0.78vw;
   color: rgb(253, 253, 253);
   line-height: 1.5vw;
   font-weight: 700;
@@ -100,5 +97,11 @@ p {
   border-left: 0.73vw solid rgb(0, 205, 251);
   border-top: 0.73vw solid transparent;
   border-bottom: 0.73vw solid transparent;
+}
+img[lazy="loading"] {
+  display: block;
+  width: 100% !important;
+  height: 50% !important;
+  margin-top: 30%;
 }
 </style>

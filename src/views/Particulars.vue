@@ -5,7 +5,7 @@
       <div class="box_img">
         <div class="logo-site">
           <div class="kk"></div>
-          <img :src="data.cover" alt="" />
+          <img v-lazy="data.cover" alt="" />
         </div>
         <div class="pb">
           <div style="font-size: 20px; font-weight: 700; color: #ffffff">
@@ -60,8 +60,11 @@ export default {
       // console.log(res.data.data);
       this.data = res.data.data;
       this.data.videoType = this.data.videoType.split(",")[0];
+      console.log(this.data);
     });
   },
+
+  // https://s.gszyr.com:65/20220418/wom3IPBe/index.m3u8
   //beforeCreate() {}, //生命周期 - 创建之前
   //beforeMount() {}, //生命周期 - 挂载之前
   //beforeUpdate() {}, //生命周期 - 更新之前
@@ -102,6 +105,7 @@ export default {
   width: 14.06vw;
   height: 20.16vw;
   overflow: hidden;
+  /* background-color: rgba(255, 255, 255, 0.8); */
 }
 
 .pb {

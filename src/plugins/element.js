@@ -43,7 +43,8 @@ import {
     TimelineItem,
     Carousel,
     CarouselItem,
-    Drawer
+    Drawer,
+    Loading
 
 } from 'element-ui'
 Vue.use(Button)
@@ -90,3 +91,4 @@ Vue.use(CarouselItem)
 Vue.use(Drawer)
 Vue.prototype.$Message = Message
 Vue.prototype.$confirm = MessageBox.confirm
+// Vue.prototype.$loading=Loading
