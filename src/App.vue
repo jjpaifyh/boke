@@ -78,4 +78,10 @@ export default {
 html {
   cursor: url("./assets/sb.png"), default;
 }
+img[lazy="error"] {
+  display: block;
+  width: 100% !important;
+  height: 50% !important;
+  margin-top: 30%;
+}
 </style>

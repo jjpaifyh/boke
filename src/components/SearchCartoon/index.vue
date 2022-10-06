@@ -31,6 +31,22 @@
           :key="index"
           :datas="data"
         ></Card>
+        <div v-if="is_tf" class="kong">
+          <img
+            src="http://localhost:2000/public/images/%E6%95%B0%E6%8D%AE%E5%86%85%E5%AE%B9%E7%A9%BA.png"
+            alt=""
+          />
+        </div>
+      </div>
+      <div class="classify">
+        <div
+          v-for="data in classify"
+          :key="data"
+          @click="classif(data)"
+          :class="{ item: true, item_k: data === key_v }"
+        >
+          {{ data }}
+        </div>
       </div>
     </el-drawer>
   </div>
@@ -47,6 +63,23 @@ export default {
       input: "",
       currentDate: new Date(),
       listdata: [],
+      is_tf: true,
+      classify: [
+        "动漫电影",
+        "科幻片",
+        "动作片",
+        "日韩动漫",
+        "欧美动漫",
+        "悬疑",
+        "惊悚",
+        "奇幻",
+        "国产动漫",
+        "国产剧",
+        "喜剧",
+        "恐怖片",
+        "犯罪",
+      ],
+      key_v: "",
     };
   },
   components: { Card },
@@ -68,13 +101,57 @@ export default {
       this.drawer = !this.drawer;
     },
     add() {
+      this.key_v = "";
+      if (this.input != "") {
+        // console.log(this.input);
+        this.listdata = [];
+        // listdata.length
+        let url = `https://api.pingcc.cn/video/search/title/${this.input}/1/30`;
+        // console.log(url);
+        axios.get(url).then((res) => {
+          // console.log("出结果了");
+          if (res.data.code == 0) {
+            this.listdata = res.data.data;
+          }
+          console.log(res.data);
+          this.is_tf = res.data.code == 1 ? true : false;
+        });
+        // .err(() => {
+        //   // this.is_tf = res.data.data.length == 0 ? true : false;
+        //   console.log(11);
+        // });
+      } else {
+        this.bef();
+      }
+    },
+    // 默认请求热门数据
+    bef() {
       // console.log(this.input);
       this.listdata = [];
-      let url = `https://api.pingcc.cn/video/search/title/${this.input}/1/10`;
+      // listdata.length
+      let url = `https://api.pingcc.cn/video/search/videoType/国产动漫/1/30`;
       // console.log(url);
       axios.get(url).then((res) => {
+        // console.log("出结果了");
         this.listdata = res.data.data;
-        // console.log(res.data.data);
+        this.is_tf = res.data.data.length == 0 ? true : false;
+        console.log(this.listdata);
+      });
+    },
+    // 分类查找
+    classif(data) {
+      this.key_v = data;
+      this.listdata = [];
+      // listdata.length
+      let url = `https://api.pingcc.cn/video/search/videoType/${data}/1/30`;
+      // console.log(url);
+      axios.get(url).then((res) => {
+        // console.log("出结果了");
+        if (res.data.code == 0) {
+          this.listdata = res.data.data;
+        }
+        console.log(res.data);
+        this.is_tf = res.data.code == 1 ? true : false;
       });
     },
   },
@@ -82,7 +159,7 @@ export default {
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
-    this.add();
+    this.bef();
   },
 };
 </script>
@@ -182,5 +259,76 @@ p:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.kong img {
+  width: 100%;
+}
+.kong {
+  width: 24vw;
+  height: 24vw;
+  position: absolute;
+  /* background-color: #08bec4; */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  /* margin: auto; */
+}
+.classify {
+  width: 5.21vw;
+  height: 27.1vw;
+  background-color: #fcfcfc;
+  position: absolute;
+  right: 41px;
+  top: 17%;
+  z-index: 3;
+  border: 1px #ccc solid;
+  min-width: 60px;
+}
+.item {
+  min-width: 60px;
+  width: 100%;
+  height: 2.08vw;
+  /* background-color: #7de6b3; */
+
+  text-align: center;
+  line-height: 2.08vw;
+  font-size: 0.78vw;
+}
+.item:hover {
+  color: rgb(248, 248, 248);
+  background-color: #4f4f4f;
+}
+.item_k {
+  color: rgb(248, 248, 248);
+  background-color: #4f4f4f;
+
+  border: 1px rgb(13, 235, 235) solid;
+  /* transform: translate(-50%, -50%);  */
+  background: linear-gradient(
+    90deg,
+    #03a9f4,
+    #ffeb3b,
+    #f441a5,
+    #ff253a,
+    #bbffaa,
+    #eeeeee
+  );
+  /*设置背景颜色渐变*/
+  background-size: 400%; /*设置背景填充比例,放大4倍,使颜色过渡柔和,淡化线条*/
+  /* position: absolute; */
+  animation: stream 8s infinite linear; /*开启动画帧,线性移动背景,无限循环*/
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+@keyframes stream {
+  from,
+  to {
+    background-position: 0%; /*无线循环,开始和结束帧设置相同*/
+  }
+  50% {
+    background-position: 100%; /*关键帧设置背景移动100%*/
+  }
 }
 </style>

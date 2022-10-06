@@ -16,9 +16,9 @@
       <div class="iconfont">
         &#xeca1;茶话会
         <div class="div_box san">
-          <div @click="go_music()">音乐</div>
-          <div @click="goGame()">游戏世界</div>
-          <div @click="go_Cartoon()">动漫</div>
+          <div @click="go_music()">音乐庭院</div>
+          <div @click="goGame()">游戏大厅</div>
+          <div @click="go_Cartoon()">私人影院</div>
         </div>
       </div>
       <div class="iconfont">&#xe615;留言</div>
