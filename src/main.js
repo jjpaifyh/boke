@@ -5,8 +5,6 @@ import store from './store'
 import "@/assets/iconfont/iconfont.css";
 import "@/assets/css/csh.css";
 // import 'video.js/dist/video-js.css'; // video.js样式
-
-
 import VueLazyload from 'vue-lazyload'
 // Vue.use(VueLazyload)
 // 配置项

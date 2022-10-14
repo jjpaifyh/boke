@@ -19,6 +19,7 @@
           <div @click="go_music()">音乐庭院</div>
           <div @click="goGame()">游戏大厅</div>
           <div @click="go_Cartoon()">私人影院</div>
+          <div @click="go_PrettyPictures()">图库</div>
         </div>
       </div>
       <div class="iconfont">&#xe615;留言</div>
@@ -34,7 +35,6 @@
 
 <script>
 import DropDown from "../DropDown";
-// import DropDown from "./components/DropDown";
 export default {
   name: "index",
   data() {
@@ -55,6 +55,9 @@ export default {
     },
     go_Cartoon() {
       this.$router.push("/Cartoon");
+    },
+    go_PrettyPictures() {
+      this.$router.push("/PrettyPictures");
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -181,6 +184,6 @@ export default {
   background-color: rgb(248, 248, 248, 0.7);
 }
 .san {
-  height: 123px;
+  height: 164px;
 }
 </style>

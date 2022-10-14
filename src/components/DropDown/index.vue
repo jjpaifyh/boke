@@ -21,6 +21,7 @@ export default {
   watch: {
     // 监听滚动跳，是否隐藏top按键
     scrollTop_data: function (newV, oldV) {
+      // console.log(`检测数据：${newV},${oldV}`);
       if (newV > 320) {
         this.top_TF = false;
       }
@@ -53,6 +54,7 @@ export default {
         document.documentElement.scrollTop ||
         document.body.scrollTop;
       this.scrollTop_data = scrollTop;
+      console.log("发送了改变");
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -60,6 +62,8 @@ export default {
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     // 注册窗口滚动条事件
+    let body = document.querySelector("body");
+    console.log(body);
     window.addEventListener("scroll", this.windowScroll);
   },
   //beforeCreate() {}, //生命周期 - 创建之前
@@ -84,7 +88,7 @@ export default {
   position: fixed;
   bottom: 8vh;
   left: 90vw;
-  z-index: 99;
+  z-index: 100;
 }
 .show_top {
   display: none;
