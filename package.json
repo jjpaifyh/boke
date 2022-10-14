@@ -16,6 +16,8 @@
     "videojs-contrib-hls": "^5.15.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vue-waterfall": "^1.0.6",
+    "vue-waterfall2": "^1.10.5",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

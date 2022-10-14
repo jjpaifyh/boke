@@ -11,6 +11,7 @@
       :before-close="handleClose"
       size="80%"
     >
+      <Hint :text="text" :is_tf="is_tf_h"></Hint>
       <div class="box_ss">
         <el-input
           placeholder="请输入電影名稱哦"
@@ -26,11 +27,19 @@
         >
       </div>
       <div class="list">
+        <div class="jz" v-show="is_jz">
+          <img src="../../assets/img/jz.gif" alt="" />
+        </div>
         <Card
           v-for="(data, index) in listdata"
           :key="index"
           :datas="data"
         ></Card>
+        <div class="w" v-show="!is_tf && !is_jz">
+          <div class="left" @click="left()">上一页</div>
+          <div>{{ urlnum }}</div>
+          <div class="rigth" @click="rigth()">下一页</div>
+        </div>
         <div v-if="is_tf" class="kong">
           <img
             src="http://localhost:2000/public/images/%E6%95%B0%E6%8D%AE%E5%86%85%E5%AE%B9%E7%A9%BA.png"
@@ -55,6 +64,7 @@
 <script>
 import axios from "axios";
 import Card from "./components/Card";
+import Hint from "../Hint";
 export default {
   name: "SearchCartoon",
   data() {
@@ -80,9 +90,14 @@ export default {
         "犯罪",
       ],
       key_v: "",
+      urlvuex: "",
+      urlnum: 1,
+      text: "提示出来啦",
+      is_tf_h: false,
+      is_jz: false,
     };
   },
-  components: { Card },
+  components: { Card, Hint },
   //监听属性 类似于data概念
   computed: {},
   //监控data中的数据变化
@@ -107,13 +122,17 @@ export default {
         this.listdata = [];
         // listdata.length
         let url = `https://api.pingcc.cn/video/search/title/${this.input}/1/30`;
+        this.urlvuex = `https://api.pingcc.cn/video/search/title/${this.input}`;
+        this.is_tf = false;
         // console.log(url);
+        this.is_jz = true;
         axios.get(url).then((res) => {
           // console.log("出结果了");
           if (res.data.code == 0) {
             this.listdata = res.data.data;
           }
           console.log(res.data);
+          this.is_jz = false;
           this.is_tf = res.data.code == 1 ? true : false;
         });
         // .err(() => {
@@ -130,29 +149,98 @@ export default {
       this.listdata = [];
       // listdata.length
       let url = `https://api.pingcc.cn/video/search/videoType/国产动漫/1/30`;
+      this.urlvuex = `https://api.pingcc.cn/video/search/videoType/国产动漫`;
       // console.log(url);
+      // this.is_tf = true;
+      this.is_tf = false;
+      this.is_jz = true;
       axios.get(url).then((res) => {
         // console.log("出结果了");
         this.listdata = res.data.data;
+        this.is_jz = false;
         this.is_tf = res.data.data.length == 0 ? true : false;
         console.log(this.listdata);
       });
     },
     // 分类查找
     classif(data) {
+      this.urlnum = 1;
       this.key_v = data;
       this.listdata = [];
       // listdata.length
       let url = `https://api.pingcc.cn/video/search/videoType/${data}/1/30`;
+      this.urlvuex = `https://api.pingcc.cn/video/search/videoType/${data}`;
       // console.log(url);
+      // this.is_tf = true;
+      this.is_tf = false;
+      this.is_jz = true;
       axios.get(url).then((res) => {
         // console.log("出结果了");
         if (res.data.code == 0) {
           this.listdata = res.data.data;
         }
         console.log(res.data);
+        this.is_jz = false;
         this.is_tf = res.data.code == 1 ? true : false;
       });
+    },
+    // 下一页
+    rigth() {
+      if (this.listdata.length == 30) {
+        // console.log(this.urlvuex);
+        this.urlnum = this.urlnum + 1;
+        let url = this.urlvuex + "/" + this.urlnum + "/30";
+        this.listdata = [];
+        // this.is_tf = true;
+        this.is_tf = false;
+        this.is_jz = true;
+        axios.get(url).then((res) => {
+          // console.log("出结果了");
+          if (res.data.code == 0) {
+            this.listdata = res.data.data;
+          }
+          console.log(res.data);
+          this.is_jz = false;
+          this.is_tf = res.data.code == 1 ? true : false;
+        });
+      } else {
+        this.text = "没有更多相关内容了呢~";
+        this.is_tf_h = true;
+        setTimeout(() => {
+          this.is_tf_h = false;
+          console.log("计时器触发");
+        }, 2000);
+      }
+    },
+    // 上一页
+    left() {
+      if (this.listdata.length == 30) {
+        // console.log(this.urlvuex);
+        if (this.urlnum > 1) {
+          this.urlnum = this.urlnum - 1;
+          let url = this.urlvuex + "/" + this.urlnum + "/30";
+          this.listdata = [];
+          // this.is_tf = true;
+          this.is_tf = false;
+          this.is_jz = true;
+          axios.get(url).then((res) => {
+            // console.log("出结果了");
+            if (res.data.code == 0) {
+              this.listdata = res.data.data;
+            }
+            console.log(res.data);
+            this.is_jz = false;
+            this.is_tf = res.data.code == 1 ? true : false;
+          });
+        } else {
+          this.text = "不可以~达咩达咩~";
+          this.is_tf_h = true;
+          setTimeout(() => {
+            this.is_tf_h = false;
+            console.log("计时器触发");
+          }, 2000);
+        }
+      }
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -330,5 +418,49 @@ p:hover {
   50% {
     background-position: 100%; /*关键帧设置背景移动100%*/
   }
+}
+.w {
+  width: 100%;
+  height: 100px;
+  /* background-color: #08bec4; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.w div {
+  width: 5vw;
+  height: 2vw;
+  background-color: #ffffff;
+  line-height: 2vw;
+  text-align: center;
+  border: 1px #ccc solid;
+}
+.left:hover,
+.rigth:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(127, 127, 127);
+}
+
+.left {
+  margin-right: 20px;
+}
+.rigth {
+  margin-left: 20px;
+}
+.jz {
+  width: 85%;
+  margin: auto;
+  height: 600px;
+  background-color: rgb(25, 145, 236);
+  border-radius: 50px;
+  box-shadow: 0 0 2.6vw 1.56vw #ffffff inset;
+}
+.jz img {
+  width: 20.83vw;
+  height: 15.63vw;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

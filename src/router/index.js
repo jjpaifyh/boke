@@ -16,6 +16,9 @@ const Play_m=()=>
 
 const Cartoon=()=>
     import("../views/Cartoon.vue")
+
+const PrettyPictures=()=>
+    import("../views/PrettyPictures.vue")
 Vue.use(VueRouter)
 
 
@@ -61,6 +64,12 @@ const routes = [
     path:'/Play_m',
     name:"Play_m",
     component:Play_m
+
+  },
+  {
+    path:'/PrettyPictures',
+    name:"PrettyPictures",
+    component:PrettyPictures
 
   },
 
