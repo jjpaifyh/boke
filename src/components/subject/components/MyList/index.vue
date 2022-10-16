@@ -1,5 +1,10 @@
 <template>
-  <div :class="is_tf ? 'MyList' : 'MyList flox'">
+  <div
+    :class="[is_tf ? 'MyList' : 'MyList flox']"
+    :style="
+      is_bh ? '' : `position: absolute !important;top:unset; bottom: 0px;`
+    "
+  >
     <My></My>
   </div>
 </template>
@@ -12,6 +17,7 @@ export default {
     return {
       scrollTop_data: 1,
       is_tf: true,
+      is_bh: true,
     };
   },
   //监听属性 类似于data概念
@@ -20,6 +26,8 @@ export default {
   //监控data中的数据变化
   watch: {
     scrollTop_data: function (newV, oldV) {
+      console.log(document.body.clientHeight);
+      console.log(newV);
       if (newV > 279) {
         if (this.is_tf) {
           this.is_tf = false;
@@ -29,6 +37,15 @@ export default {
         if (!this.is_tf) {
           this.is_tf = true;
         }
+      }
+      if (newV > 1620) {
+        // h:150
+        // console.log("class固定");
+        this.is_bh = false;
+      }
+      if (newV < 1620) {
+        // console.log("class浮动");
+        this.is_bh = true;
       }
     },
   },
@@ -64,15 +81,17 @@ export default {
 <style scoped>
 .MyList {
   width: 20vw;
-  height: 1000px;
+  height: 52.08vw;
   /* background-color: rgb(231, 240, 240); */
   background-color: #f5f5f5;
   /* border-radius: 20px; */
   margin: 15px 15px 15px 0px;
+  border: 1px red solid;
 }
 .flox {
   position: fixed;
   top: 41px;
 }
+
 /* 320-41 =279*/
 </style>

@@ -1,11 +1,7 @@
 <template>
   <div class="index">
     <div>
-      <ListData />
-      <ListData />
-      <ListData />
-      <ListData />
-      <ListData />
+      <ListData v-for="k in 10" :key="k" />
     </div>
     <div>
       <MyList />
@@ -51,5 +47,6 @@ export default {
   background-color: #f5f5f5;
   margin: auto;
   display: flex;
+  position: relative;
 }
 </style>
