@@ -5,12 +5,20 @@
       is_bh ? '' : `position: absolute !important;top:unset; bottom: 0px;`
     "
   >
+    <!-- 个人头像展示与登录 -->
     <My></My>
+    <!-- 最近评论 -->
+    <CommentMin></CommentMin>
+
+    <!-- 推荐文章 -->
+    <Recommend></Recommend>
   </div>
 </template>
 
 <script>
 import My from "../My/index.vue";
+import CommentMin from "../CommentMin/index.vue";
+import Recommend from "../Recommend/index.vue";
 export default {
   name: "MyList",
   data() {
@@ -21,7 +29,7 @@ export default {
     };
   },
   //监听属性 类似于data概念
-  components: { My },
+  components: { My, CommentMin, Recommend },
   computed: {},
   //监控data中的数据变化
   watch: {
@@ -38,12 +46,12 @@ export default {
           this.is_tf = true;
         }
       }
-      if (newV > 1620) {
+      if (newV > 1840) {
         // h:150
         // console.log("class固定");
         this.is_bh = false;
       }
-      if (newV < 1620) {
+      if (newV < 1840) {
         // console.log("class浮动");
         this.is_bh = true;
       }
@@ -82,11 +90,13 @@ export default {
 .MyList {
   width: 20vw;
   height: 52.08vw;
+  position: absolute;
   /* background-color: rgb(231, 240, 240); */
   background-color: #f5f5f5;
   /* border-radius: 20px; */
   margin: 15px 15px 15px 0px;
-  border: 1px red solid;
+  /* border: 1px red solid; */
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 }
 .flox {
   position: fixed;

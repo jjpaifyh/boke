@@ -25,6 +25,7 @@
           :key="index"
           :listdata="k"
           :name="data.title"
+          :videoId="videoId"
         ></Keyboard>
       </div>
     </div>
@@ -55,6 +56,7 @@ export default {
   mounted() {
     this.videoId = this.$route.query.videoId;
     // console.log(this.videoId);
+    console.log(this.videoId);
     let url = `https://api.pingcc.cn/videoChapter/search/${this.videoId}`;
     axios.get(url).then((res) => {
       // console.log(res.data.data);

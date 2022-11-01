@@ -1,6 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+Vue.use(VueRouter)
+const RouterPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (to) {
+  return RouterPush.call(this, to).catch(err => err)
+}
+const RouterReplace = VueRouter.prototype.replace
+VueRouter.prototype.replace = function replace (to) {
+  return RouterReplace.call(this, to).catch(err => err)
+}
+
 const Home = () =>
     import ("../views/Home.vue")
 const Music = () =>
@@ -19,18 +29,35 @@ const Cartoon=()=>
 
 const PrettyPictures=()=>
     import("../views/PrettyPictures.vue")
+
+const Subject=()=>
+    import("../components/subject/index.vue")
+const Article=()=>
+    import("../components/Article/index.vue")
 Vue.use(VueRouter)
 
 
 const routes = [
   {
     path: "/",
-    redirect: '/home'
+    redirect: '/init'
   },
   {
     path: '/home',
     name: 'Home',
-    component: Home
+    component: Home,
+    children:[
+      {
+        path:'/init',
+        name:'init',
+        component:Subject
+      },
+      {
+        path:'/Article/:id',
+        name:'Article',
+        component:Article
+      }
+    ]
   },
   {
     path: '/music',

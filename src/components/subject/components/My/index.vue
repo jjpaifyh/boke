@@ -1,24 +1,89 @@
 <!--  -->
 <template>
   <div class="my">
-    <div class="head"></div>
+    <Hint :text="text" :is_tf="is_tf_Hint"></Hint>
+    <Login
+      :is_show="is_show"
+      @xg_is_show="loginshow"
+      @getthem="getthem"
+      @show_bj="loginshow"
+    ></Login>
+    <div class="head">
+      <img :src="avatar" alt="" v-show="avatar" />
+    </div>
     <div class="shang"></div>
-    <p class="js">咦？我是谁？我为什么会在这？[关于]</p>
+    <div class="js" v-show="!is_tf">{{ name == "" ? namenull : name }}</div>
+    <div class="js" v-show="is_tf">
+      咦？我是谁？我为什么会在这？
+      <span @click="loginshow">[登录]</span>
+    </div>
   </div>
 </template>
 
 <script>
+import Login from "../../../Login";
+import Hint from "../../../Hint";
+import axios from "axios";
 export default {
   name: "my",
   data() {
-    return {};
+    return {
+      avatar: "",
+      name: "",
+      is_tf: true,
+      is_show: false,
+      text: "登录成功",
+      is_tf_Hint: false,
+      namenull: "未知匿名",
+    };
   },
+  components: { Login, Hint },
   //监听属性 类似于data概念
   computed: {},
   //监控data中的数据变化
   watch: {},
   //方法集合
-  methods: {},
+  methods: {
+    login(qq) {
+      let url = "https://api.usuuu.com/qq/";
+      url = url + qq;
+      axios
+        .get(url)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.code == 200) {
+            this.avatar = res.data.data.avatar;
+            this.name = res.data.data.name;
+            this.is_tf = false;
+            console.log(this.is_tf);
+          } else {
+            this.is_tf = true;
+          }
+        })
+        .catch((err) => {
+          this.is_tf = true;
+        });
+    },
+    loginshow() {
+      this.is_show = !this.is_show;
+    },
+    getthem(tf) {
+      if (tf.istf) {
+        this.is_tf = false;
+        this.avatar = tf.avatar;
+        this.name = tf.name;
+        this.text = tf.tit;
+      } else {
+        this.is_tf = true;
+        this.text = "登录失败";
+      }
+
+      this.is_tf_Hint = true;
+      setTimeout(() => {
+        this.is_tf_Hint = false;
+      }, 2000);
+    },
+  },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
@@ -34,7 +99,7 @@ export default {
 </script>
 <style scoped>
 .my {
-  position: relative;
+  position: absolute;
   width: 100%;
   height: 13.98vw;
   margin: 0 0 15px;
@@ -73,4 +138,12 @@ export default {
   font-size: 13px;
   color: rgb(155 155 155);
 }
+.head img {
+  width: 93px;
+  height: 93px;
+  border-radius: 50%;
+}
+/* .HINT {
+  left: -200px;
+} */
 </style>

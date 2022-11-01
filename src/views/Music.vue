@@ -1,6 +1,13 @@
 <!--  -->
 <template>
   <div class="">
+    <div>
+      <el-breadcrumb separator="/" class="boxmbx">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item><a href="#/music">音乐庭院</a></el-breadcrumb-item>
+        <el-breadcrumb-item>音乐播放器</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <Player />
   </div>
 </template>
@@ -33,4 +40,18 @@ export default {
 };
 </script>
 <style scoped>
+.boxmbx {
+  width: 50vw !important;
+  height: 3vw !important;
+  /* background-color: rgb(167, 167, 169); */
+  position: fixed !important;
+  top: 0;
+  left: 50px;
+  z-index: 999;
+  overflow: hidden;
+  /* width: 100% !important;
+  height: 100% !important; */
+  /* background-color: aqua; */
+  line-height: 3vw;
+}
 </style>

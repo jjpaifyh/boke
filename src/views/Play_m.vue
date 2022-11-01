@@ -1,6 +1,22 @@
 <!--  -->
 <template>
   <div class="viedo">
+    <div :class="[is_ini ? 'init' : is_list_click ? 'plugin' : 'plugin_f']">
+      <div
+        :class="[is_ini ? 'initaf' : is_list_click ? 'afters_f' : 'afters']"
+        @click="is_list"
+      ></div>
+      <div class="db">
+        <Keyboard
+          v-for="(k, index) in list_data_key.chapterList"
+          :key="index"
+          :listdata="k"
+          :name="list_data_key.title"
+          :videoId="videoIds"
+          @add="add"
+        ></Keyboard>
+      </div>
+    </div>
     <div class="bj"></div>
     <div class="tit">
       <div class="name">{{ name }}</div>
@@ -21,10 +37,10 @@
 
 <script>
 import "video.js/dist/video-js.css";
-
+import axios from "axios";
 import videojs from "video.js";
 import "videojs-contrib-hls";
-
+import Keyboard from "../components/Keyboard";
 export default {
   name: "",
   data() {
@@ -34,8 +50,16 @@ export default {
       singlePlayer: null,
       name: "",
       num: "",
+      is_list_click: true,
+      is_ini: true,
+      videoIds: "",
+      list_data_key: [],
     };
   },
+  props: {
+    datalist: [],
+  },
+  components: { Keyboard },
   //监听属性 类似于data概念
   computed: {},
   //监控data中的数据变化
@@ -74,6 +98,27 @@ export default {
       this.videoId = this.$route.query.chapterPath;
       this.name = this.$route.query.name;
       this.num = this.$route.query.num;
+      this.videoIds = this.$route.query.videoId;
+      // console.log(this.videoIds);
+      this.get_list_data_key();
+    },
+    is_list() {
+      console.log("dianji");
+      this.is_list_click = !this.is_list_click;
+      this.is_ini = false;
+      console.log(this.is_list_click);
+    },
+    get_list_data_key() {
+      let url = `https://api.pingcc.cn/videoChapter/search/${this.videoIds}`;
+      axios.get(url).then((res) => {
+        // console.log(res.data.data);
+        this.list_data_key = res.data.data;
+        console.log(this.list_data_key);
+      });
+    },
+    add() {
+      location.reload();
+      console.log("刷新了");
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -106,9 +151,10 @@ export default {
   position: relative;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 .bj {
-  position: absolute;
+  position: relative;
   width: 100vw;
   height: 100vh;
   /* background-color: aquamarine; */
@@ -140,5 +186,132 @@ export default {
 .num {
   color: #000;
   font-size: 20px;
+}
+.plugin {
+  width: 20vw;
+  height: 80vh;
+  position: absolute;
+  /* background-color: rgb(144, 145, 145); */
+  right: 0vw;
+  top: 10vh;
+  animation: run 1s;
+  animation-fill-mode: forwards;
+  z-index: 2;
+}
+
+.plugin_f {
+  width: 20vw;
+  height: 80vh;
+  position: absolute;
+  /* background-color: rgb(144, 145, 145); */
+  right: -20vw;
+  top: 10vh;
+  animation: run_f 1s;
+  animation-fill-mode: forwards;
+  z-index: 2;
+}
+.init {
+  width: 20vw;
+  height: 80vh;
+  position: absolute;
+  /* background-color: rgb(144, 145, 145); */
+  right: -20vw;
+  top: 10vh;
+  z-index: 2;
+}
+
+.afters {
+  display: inline-block;
+  width: 4vw;
+  height: 20vw;
+  background-color: black;
+  position: absolute;
+  top: 10vw;
+  left: -4vw;
+  z-index: 0;
+  animation: aj_run 1s;
+  animation-fill-mode: forwards;
+  border-radius: 20px;
+  background-image: linear-gradient(147deg, #f5baca 0%, #51a2e8 74%);
+  text-align: center;
+}
+
+.afters_f {
+  display: inline-block;
+  width: 4vw;
+  height: 20vw;
+  background-color: black;
+  position: absolute;
+  top: 10vw;
+  left: -4vw;
+  z-index: 0;
+  animation: aj_run_f 1s;
+  animation-fill-mode: forwards;
+  border-radius: 20px;
+  background-image: linear-gradient(147deg, #f5baca 0%, #51a2e8 74%);
+  text-align: center;
+}
+.initaf {
+  display: inline-block;
+  width: 4vw;
+  height: 20vw;
+  background-color: black;
+  position: absolute;
+  top: 10vw;
+  left: -4vw;
+  z-index: 0;
+  border-radius: 20px;
+  background-image: linear-gradient(147deg, #f5baca 0%, #51a2e8 74%);
+}
+@keyframes run {
+  0% {
+    right: 0;
+  }
+  100% {
+    right: -20vw;
+  }
+}
+
+@keyframes run_f {
+  0% {
+    right: -20vw;
+  }
+  100% {
+    right: 0vw;
+  }
+}
+
+@keyframes aj_run {
+  0% {
+    left: -4vw;
+  }
+  100% {
+    left: -2vw;
+  }
+}
+
+@keyframes aj_run_f {
+  0% {
+    left: -2vw;
+  }
+  100% {
+    left: -4vw;
+  }
+}
+.db {
+  position: relative;
+  right: -17px;
+  width: 20vw;
+  height: 80vh;
+  background-color: rgb(62, 192, 244);
+  /* margin-left: 2vw; */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: auto;
+  border-radius: 20px;
+  background-image: linear-gradient(147deg, #f5baca 0%, #51a2e8 74%);
+  /* overflow-y: scroll; */
+  z-index: 0;
 }
 </style>

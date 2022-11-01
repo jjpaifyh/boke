@@ -12,6 +12,7 @@ export default {
   props: {
     listdata: {},
     name: "",
+    videoId: "",
   },
   //监听属性 类似于data概念
   computed: {},
@@ -20,15 +21,18 @@ export default {
   //方法集合
   methods: {
     add() {
-      let routeurl = this.$router.resolve({
+      console.log(this.listdata);
+      this.$router.push({
         path: "/Play_m",
         query: {
           chapterPath: this.listdata.chapterPath,
           name: this.name,
           num: this.listdata.title,
+          videoId: this.videoId,
         },
       });
-      window.open(routeurl.href, "_blank");
+      this.$emit("add");
+      // window.open(routeurl.href, "_blank");
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）

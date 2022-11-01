@@ -4,7 +4,7 @@
     <DropDown></DropDown>
     <!-- 导航栏 -->
     <div class="nev Gd">
-      <div class="iconfont">&#xe639;首页</div>
+      <div class="iconfont" @click="sy">&#xe639;首页</div>
       <div class="iconfont">&#xe661;文章</div>
       <div class="iconfont">
         &#xe610;工具
@@ -58,6 +58,9 @@ export default {
     },
     go_PrettyPictures() {
       this.$router.push("/PrettyPictures");
+    },
+    sy() {
+      this.$router.push("/");
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）

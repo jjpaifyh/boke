@@ -45,7 +45,7 @@ export default {
   width: 20vw;
   height: 5vw;
   background-color: rgb(123, 122, 122);
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 10%;
   transform: translateX(-50%);

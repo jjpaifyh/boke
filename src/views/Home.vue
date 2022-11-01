@@ -2,7 +2,9 @@
   <div class="Home">
     <!-- 板头部分 -->
     <Nose></Nose>
-    <Subject></Subject>
+    <router-view>
+      <!-- <Subject></Subject> -->
+    </router-view>
     <Bottom></Bottom>
   </div>
 </template>

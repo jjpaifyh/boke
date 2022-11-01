@@ -46,6 +46,7 @@ export default {
         this.is_TF = true;
       }, 1000);
     },
+
     windowScroll() {
       // 滚动条距离页面顶部的距离
       // 以下写法原生兼容

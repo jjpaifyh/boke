@@ -448,11 +448,11 @@ p:hover {
   margin-left: 20px;
 }
 .jz {
-  width: 85%;
+  width: 100%;
   margin: auto;
-  height: 600px;
+  height: 60.26vh;
   background-color: rgb(25, 145, 236);
-  border-radius: 50px;
+  /* border-radius: 50px; */
   box-shadow: 0 0 2.6vw 1.56vw #ffffff inset;
 }
 .jz img {
