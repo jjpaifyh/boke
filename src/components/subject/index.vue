@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div>
-      <ListData v-for="k in 10" :key="k" />
+      <ListData v-for="k in list_home_data" :key="k.id" :data="k" />
     </div>
     <div>
       <MyList />
@@ -12,10 +12,13 @@
 <script>
 import MyList from "./components/MyList";
 import ListData from "./components/ListData";
+import { listhome } from "@/request/boke/api.js";
 export default {
   name: "index",
   data() {
-    return {};
+    return {
+      list_home_data: [],
+    };
   },
   components: {
     ListData,
@@ -28,7 +31,11 @@ export default {
   //方法集合
   methods: {},
   //生命周期 - 创建完成（可以访问当前this实例）
-  created() {},
+  created() {
+    listhome().then((res) => {
+      this.list_home_data = res.data;
+    });
+  },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
   //beforeCreate() {}, //生命周期 - 创建之前

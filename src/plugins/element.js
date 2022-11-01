@@ -44,7 +44,7 @@ import {
     Carousel,
     CarouselItem,
     Drawer,
-    Loading
+    Loading,
 
 } from 'element-ui'
 Vue.use(Button)

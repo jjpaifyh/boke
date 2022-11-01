@@ -1,6 +1,13 @@
 <!--  -->
 <template>
   <div class="Game">
+    <div>
+      <el-breadcrumb separator="/" class="boxmbx">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item><a href="#/Game">游戏大厅</a></el-breadcrumb-item>
+        <el-breadcrumb-item>游戏列表</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
     <div class="background">
       <div class="box">
         <div @click="go_Gluttonous()" class="tcs">
@@ -140,6 +147,20 @@ export default {
 .box div img {
   width: 100%;
   height: 50%;
+}
+.boxmbx {
+  width: 50vw !important;
+  height: 3vw !important;
+  /* background-color: rgb(167, 167, 169); */
+  position: fixed !important;
+  top: 0;
+  left: 50px;
+  z-index: 999;
+  overflow: hidden;
+  /* width: 100% !important;
+  height: 100% !important; */
+  /* background-color: aqua; */
+  line-height: 3vw;
 }
 .tcs:hover {
   /* background-color: aqua; */

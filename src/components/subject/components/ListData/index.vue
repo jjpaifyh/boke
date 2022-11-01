@@ -1,26 +1,42 @@
 <template>
-  <div class="listdata">
+  <div class="listdata" @click="go_Article()">
     <div class="text_img">
-      <img src="http://localhost:2000/api/list" alt="" />
+      <img v-lazy="'http://localhost:2000' + data.tp_path" alt="123" />
       <div class="box_text">
         <h2>
-          <div id="icoss">使用教程</div>
-          Chevereto 3.20+ 与 Windows Server 的兼容性问题,第五版复刻js版
+          <div
+            id="icoss"
+            :class="[
+              data.label == '学习笔记' ? 'ladr' : '',
+              data.label == '娱乐爱好' ? 'ladr_r' : '',
+            ]"
+          >
+            {{ data.label }}
+          </div>
+          {{ data.title }}
         </h2>
         <p>
-          Windows 系统的路径分隔符为反斜杠(\)，而 Linux
-          系统是正斜杠(/)，当代码中使用了 PHP
-          自带函数获取路径，再进行路径拼接的话就会出现这种结果：D:\A\B/C/D.jpg，这并没有什么问题，PHP
-          可…
+          {{ data.synopsis }}
         </p>
       </div>
     </div>
     <div class="ico">
-      <a class="left-ico"><i class="fa iconfont">&#xe639;</i> 2022-04-12</a>
-      <a class="left-ico"><i class="fa iconfont">&#xe661;</i> 7条评论</a>
-      <a class="left-ico"><i class="fa iconfont"> &#xe610;</i> 3.32k次阅读</a>
-      <a class="left-ico"><i class="fa iconfont">&#xe639;</i> 122人点赞</a>
-      <a class="left-ico"><i class="fa iconfont">&#xe639;</i> 小鹏-鹏</a>
+      <a class="left-ico"
+        ><i class="fa iconfont">&#xe639;</i>
+        {{ data.date_start.split("T")[0] }}</a
+      >
+      <a class="left-ico"
+        ><i class="fa iconfont">&#xe661;</i> {{ data.like }}</a
+      >
+      <a class="left-ico"
+        ><i class="fa iconfont"> &#xe610;</i> {{ data.look_num }}次阅读</a
+      >
+      <a class="left-ico"
+        ><i class="fa iconfont">&#xe639;</i> {{ data.comment }}人点赞</a
+      >
+      <a class="left-ico"
+        ><i class="fa iconfont">&#xe639;</i> {{ data.author_key }}</a
+      >
       <a class="flsex"><i class="fa iconfont">&#xeca1;</i> 查看更多></a>
     </div>
   </div>
@@ -32,23 +48,27 @@ export default {
   data() {
     return {};
   },
+  props: {
+    data: {},
+  },
   //监听属性 类似于data概念
   computed: {},
   //监控data中的数据变化
   watch: {},
   //方法集合
-  methods: {},
+  methods: {
+    go_Article() {
+      console.log(this.data.id);
+      this.$router.push({
+        path: `/Article/${this.data.id}`,
+      });
+      window.scrollTo(0, 0);
+    },
+  },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
-  //beforeCreate() {}, //生命周期 - 创建之前
-  //beforeMount() {}, //生命周期 - 挂载之前
-  //beforeUpdate() {}, //生命周期 - 更新之前
-  //updated() {}, //生命周期 - 更新之后
-  //beforeDestroy() {}, //生命周期 - 销毁之前
-  //destroyed() {}, //生命周期 - 销毁完成
-  //activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 };
 </script>
 <style scoped>
@@ -121,7 +141,7 @@ p {
 } */
 #icoss {
   /* position: absolute; */
-  width: 85px;
+  width: 66px;
   height: 22px;
   background: red;
   margin-top: 4px;
@@ -133,6 +153,7 @@ p {
   font-weight: 700;
   line-height: 14px;
   color: #fff;
+  text-align: center;
 }
 #icoss::before {
   position: absolute;
@@ -160,5 +181,18 @@ p {
   display: flex;
   justify-content: start;
   /* margin-left: 60px; */
+}
+.ladr {
+  background-color: blueviolet !important;
+}
+.ladr::before {
+  border-left: 4px solid blueviolet !important;
+}
+.ladr_r {
+  background-color: #9af272 !important;
+}
+
+.ladr_r::before {
+  border-left: 4px solid #9af272 !important;
 }
 </style>

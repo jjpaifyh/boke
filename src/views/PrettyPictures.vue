@@ -15,6 +15,15 @@
       </div>
     </div>
     <div class="but"></div>
+    <div>
+      <el-breadcrumb separator="/" class="boxmbx">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item
+          ><a href="#/PrettyPictures">图库</a></el-breadcrumb-item
+        >
+        <el-breadcrumb-item>二次元美少女</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
   </div>
 </template>
 
@@ -70,6 +79,20 @@ export default {
 };
 </script>
 <style scoped>
+.boxmbx {
+  width: 50vw !important;
+  height: 3vw !important;
+  /* background-color: rgb(167, 167, 169); */
+  position: fixed !important;
+  top: 0;
+  left: 50px;
+  z-index: 999;
+  overflow: hidden;
+  /* width: 100% !important;
+  height: 100% !important; */
+  /* background-color: aqua; */
+  line-height: 3vw;
+}
 .box {
   width: 100vw;
   height: 100vh;
