@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.15.10",
     "js-base64": "^3.7.2",
+    "lax.js": "^2.0.3",
     "nanoid": "^4.0.0",
     "video.js": "^7.20.3",
     "videojs-contrib-hls": "^5.15.0",

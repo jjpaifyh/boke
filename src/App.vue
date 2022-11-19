@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <router-view> </router-view>
+    <transition :name="transitionName">
+      <keep-alive>
+        <router-view> </router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
@@ -63,6 +67,16 @@ export default {
         },
       });
   },
+  watch: {
+    $route(to, from) {
+      //此时假设从index页面跳转到pointList页面
+      console.log(to); // "/pointList"
+      console.log(from); // “/index”
+      const routeDeep = ["/init"];
+      const toDepth = routeDeep.indexOf(to.path);
+      this.transitionName = toDepth != 0 ? "fold-left" : "fold-right";
+    },
+  },
 };
 </script>
 
@@ -83,5 +97,65 @@ img[lazy="error"] {
   width: 100% !important;
   height: 50% !important;
   margin-top: 30%;
+}
+
+// 过度动画
+.fold-left-enter-active {
+  animation-name: fold-left-in;
+  animation-duration: 0.5s;
+}
+.fold-left-leave-active {
+  animation-name: fold-left-out;
+  animation-duration: 0.5s;
+}
+@keyframes fold-left-in {
+  0% {
+    // position: absolute;
+    transform: translate3d(100%, 0, 0);
+  }
+  100% {
+    // position: absolute;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fold-left-out {
+  0% {
+    position: absolute;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    position: absolute;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+.fold-right-enter-active {
+  animation-name: fold-left-in_jjp;
+  animation-duration: 0.5s;
+}
+.fold-right-leave-active {
+  animation-name: fold-left-out_jjp;
+  animation-duration: 0.5s;
+}
+@keyframes fold-left-in_jjp {
+  0% {
+    width: 200vw !important;
+    // position: absolute;
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    width: 200vw !important;
+    // position: absolute;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fold-left-out_jjp {
+  0% {
+    position: absolute;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    position: absolute;
+    transform: translate3d(100%, 0, 0);
+  }
 }
 </style>

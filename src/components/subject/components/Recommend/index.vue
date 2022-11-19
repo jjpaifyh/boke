@@ -14,24 +14,25 @@
         @click="click(1)"
         :style="id == 1 ? 'border-bottom: 3px rgb(94, 174, 232) solid;' : ''"
       >
-        随机文章
+        微博热搜
       </div>
     </div>
-    <div class="tj" v-show="id == 0">
+    <div class="tjwb" v-show="id == 0">
       <div class="box iconfont" v-for="(k, index) in data" :key="index">
         &#xe661;&nbsp;&nbsp;
         {{ k.title }}
       </div>
     </div>
-    <div class="tj" v-show="id == 1">
-      <div class="box iconfont" v-for="(k, index) in data" :key="index">
-        &#xe661;&nbsp;&nbsp; 随机文章
+    <div class="tjwb" v-show="id == 1">
+      <div class="box iconfont" v-for="(k, index) in weibodata" :key="index">
+        <a :href="k.url" class="a_url">&#xe661;&nbsp;&nbsp; {{ k.title }}</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import { tj_article } from "@/request/boke/api.js";
 export default {
   name: "Recommend",
@@ -39,6 +40,7 @@ export default {
     return {
       data: [],
       id: 0,
+      weibodata: [],
     };
   },
   components: { tj_article },
@@ -57,6 +59,14 @@ export default {
     tj_article().then((res) => {
       this.data = res.data;
     });
+    axios
+      .get(
+        "https://api.lilinbo.cn/api/heatlist?key=83ba6fc105e044eba353a6e00fc29af1&type=weibo"
+      )
+      .then((res) => {
+        this.weibodata = res.data.data.list.slice(0, 19);
+        console.log(res.data.data);
+      });
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
@@ -127,5 +137,19 @@ export default {
   justify-content: center;
   align-content: center;
   flex-direction: column;
+}
+.tjwb {
+  width: 85%;
+  height: 15.5vw;
+
+  overflow: hidden;
+  overflow: scroll;
+}
+
+.tjwb::-webkit-scrollbar {
+  width: 0 !important;
+}
+.a_url {
+  color: #000;
 }
 </style>

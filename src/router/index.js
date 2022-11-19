@@ -34,10 +34,14 @@ const Subject=()=>
     import("../components/subject/index.vue")
 const Article=()=>
     import("../components/Article/index.vue")
+const UN_data=()=>
+    import('../views/404.vue')
+
 Vue.use(VueRouter)
 
 
 const routes = [
+  { path: '*',redirect: {name: '404'}},
   {
     path: "/",
     redirect: '/init'
@@ -46,6 +50,9 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home,
+    meta: {
+      keepAlive: true
+    },
     children:[
       {
         path:'/init',
@@ -99,6 +106,12 @@ const routes = [
     component:PrettyPictures
 
   },
+  {
+    path:'/404',
+    name:"404",
+    component:UN_data
+
+  }
 
 ]
 
