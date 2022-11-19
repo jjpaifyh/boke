@@ -1,6 +1,19 @@
 <!--  -->
 <template>
-  <div class="article">文章页面，正在疯狂构建中 id：{{ id }}</div>
+  <!-- 文章页面，正在疯狂构建中 id：{{ id }} -->
+  <div class="article">
+    <div class="titct">
+      <div class="tit">Chevereto 3.20+ 与 Windows Server 的兼容性问题</div>
+      <div class="box">
+        <div class="iconfont">&#xe639;日期</div>
+        <div class="iconfont">&#xe639;n条评论</div>
+        <div class="iconfont">&#xe639;n次阅读</div>
+        <div class="iconfont">&#xe639;n次点赞</div>
+        <div class="iconfont">&#xe639;作者</div>
+      </div>
+    </div>
+    <div class="main">内容</div>
+  </div>
 </template>
 
 <script>
@@ -41,7 +54,41 @@ export default {
 </script>
 <style scoped>
 .article {
-  width: 100%;
+  width: 70%;
   height: 50vw;
+  background-color: rgb(235, 235, 235);
+  margin: auto;
+}
+.titct {
+  width: 100%;
+  height: 10vw;
+  /* border: 1px solid red; */
+}
+.titct .tit {
+  width: 100%;
+  height: 3vw;
+  text-align: center;
+  line-height: 3vw;
+  font-size: 25px;
+  /* background-color: blueviolet; */
+  padding-top: 2vw;
+}
+.titct .box {
+  width: 100%;
+  height: 3vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2vw;
+}
+.titct .box div {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.main {
+  width: 100%;
+  height: 80vh;
+  background-color: rebeccapurple;
 }
 </style>

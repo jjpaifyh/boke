@@ -34,11 +34,14 @@
 </template>
 
 <script>
+import axios from "axios";
 import DropDown from "../DropDown";
 export default {
   name: "index",
   data() {
-    return {};
+    return {
+      text: "",
+    };
   },
   components: { DropDown },
   //监听属性 类似于data概念
@@ -62,41 +65,52 @@ export default {
     sy() {
       this.$router.push("/");
     },
+    zttx() {
+      // 字段特效
+      const textEl = document.querySelector("#text");
+      console.log(textEl);
+      const text = this.text;
+      let idx = 1;
+      let speed = 300 / 2;
+      let TF = true;
+      writeText();
+      function writeText() {
+        if (TF) {
+          textEl.innerText = text.slice(0, idx);
+
+          idx++;
+
+          if (idx >= text.length) {
+            TF = false;
+          }
+        } else {
+          textEl.innerText = text.slice(0, idx);
+
+          idx--;
+
+          if (idx == 0) {
+            TF = true;
+          }
+        }
+        setTimeout(writeText, speed);
+      }
+    },
+    async init() {
+      await axios
+        .get(
+          "https://api.lilinbo.cn/api/dujitang?key=83ba6fc105e044eba353a6e00fc29af1"
+        )
+        .then((res) => {
+          this.text = res.data.data;
+        });
+      this.zttx();
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
-    // 字段特效
-    const textEl = document.querySelector("#text");
-    console.log(textEl);
-    const text = "欢迎来到小蒋的小窝,让我们一起学习进步吧";
-    let idx = 1;
-    let speed = 300 / 2;
-    let TF = true;
-    writeText();
-    function writeText() {
-      if (TF) {
-        textEl.innerText = text.slice(0, idx);
-
-        idx++;
-
-        if (idx >= text.length) {
-          TF = false;
-        }
-      } else {
-        textEl.innerText = text.slice(0, idx);
-
-        idx--;
-
-        if (idx == 0) {
-          TF = true;
-        }
-      }
-      setTimeout(writeText, speed);
-    }
-
-    // 结束
+    this.init();
   },
   //beforeCreate() {}, //生命周期 - 创建之前
   //beforeMount() {}, //生命周期 - 挂载之前
