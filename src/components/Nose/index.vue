@@ -22,8 +22,8 @@
           <div @click="go_PrettyPictures()">图库</div>
         </div>
       </div>
-      <div class="iconfont">&#xe615;留言</div>
-      <div class="iconfont">&#xe614;关于</div>
+      <div class="iconfont" @click="go_message()">&#xe615;留言</div>
+      <div class="iconfont" @click="go_end()">&#xe614;关于</div>
     </div>
     <!-- 特效文字栏 -->
     <div class="master GP">
@@ -64,6 +64,12 @@ export default {
     },
     sy() {
       this.$router.push("/");
+    },
+    go_message() {
+      this.$router.push("/message");
+    },
+    go_end() {
+      this.$router.push("/gy");
     },
     zttx() {
       // 字段特效
@@ -126,9 +132,9 @@ export default {
   position: relative;
   height: 320px;
   width: 100%;
-  background: url("http://localhost:2000/api/head") no-repeat;
+  background: url("../../assets/img/site_head.png") no-repeat;
   background-size: 100%;
-  background-position: center center;
+  background-position: top center;
 }
 .nev {
   background-color: rgb(64, 65, 66, 0.5);

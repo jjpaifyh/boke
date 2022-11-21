@@ -23,20 +23,18 @@ const Particulars=()=>
   import('../views/Particulars.vue')
 const Play_m=()=>
   import('../views/Play_m.vue')
-
 const Cartoon=()=>
     import("../views/Cartoon.vue")
-
 const PrettyPictures=()=>
     import("../views/PrettyPictures.vue")
-
 const Subject=()=>
     import("../components/subject/index.vue")
 const Article=()=>
     import("../components/Article/index.vue")
 const UN_data=()=>
     import('../views/404.vue')
-
+const Message=()=>
+    import('../views/message.vue')
 Vue.use(VueRouter)
 
 
@@ -110,6 +108,12 @@ const routes = [
     path:'/404',
     name:"404",
     component:UN_data
+
+  },
+  {
+    path:'/message',
+    name:"message",
+    component:Message
 
   }
 
