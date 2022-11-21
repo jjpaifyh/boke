@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "bright-comment": "^1.5.7",
     "core-js": "^3.6.5",
     "element-ui": "^2.15.10",
     "js-base64": "^3.7.2",
