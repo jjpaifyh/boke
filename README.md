@@ -29,6 +29,8 @@
 图片模块
 ![{$B0@23E8$`ZSBL_@QVPESI](https://user-images.githubusercontent.com/103714254/199253117-faac615c-dd75-46fb-898c-67cea0cf31e4.png)
 
+留言板模块
+![SA66 MT5`)~%O4)}LB5BK(S](https://user-images.githubusercontent.com/103714254/203089104-0aa69797-c1c1-4522-addb-20f9eb33577b.jpg)
 
 
 正在佛系更新中
