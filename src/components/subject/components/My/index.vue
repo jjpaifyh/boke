@@ -83,9 +83,22 @@ export default {
         this.is_tf_Hint = false;
       }, 2000);
     },
+    exit() {
+      console.log(66);
+      this.avatar =
+        "http://thirdqq.qlogo.cn/g?b=sdk&k=CXQicDo1avw5q82A8NfCKOQ&s=100&t=1586483094?rand=1605000166";
+      this.is_tf = !this.is_tf;
+    },
+    bus_init() {
+      this.$bus.$on("exit_qq", ($event) => {
+        this.exit();
+      });
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
-  created() {},
+  created() {
+    this.bus_init();
+  },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
   //beforeCreate() {}, //生命周期 - 创建之前

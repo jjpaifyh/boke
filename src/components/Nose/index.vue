@@ -25,15 +25,25 @@
       <div class="iconfont" @click="go_message()">&#xe615;留言</div>
       <div class="iconfont" @click="go_end()">&#xe614;关于</div>
     </div>
+    <div class="TC_id" @click="tou" @mouseleave="leave">
+      <img class="img_tx" :src="img_tx" alt="" />
+      <div :class="['box_xla', tou_M == 1 ? 'go' : 'leave']">
+        <div class="list_box">权限ID</div>
+        <div class="list_box" @click="exit">退出登录</div>
+      </div>
+    </div>
     <!-- 特效文字栏 -->
     <div class="master GP">
       <h2>鹏の小さな巣</h2>
       <h4 id="text"></h4>
     </div>
+    <hint :text="text_hint" :is_tf="is_tf"></hint>
   </div>
 </template>
 
 <script>
+import hint from "../Hint";
+import { mapMutations } from "vuex";
 import axios from "axios";
 import DropDown from "../DropDown";
 export default {
@@ -41,15 +51,58 @@ export default {
   data() {
     return {
       text: "",
+      img_tx: require("../../assets/img/defaultheadportrait.png"),
+      img_tx_new: "",
+      tou_M: 2,
+      text_hint: "",
+      is_tf: false,
     };
   },
-  components: { DropDown },
+  components: { DropDown, hint },
   //监听属性 类似于data概念
   computed: {},
   //监控data中的数据变化
   watch: {},
   //方法集合
   methods: {
+    ...mapMutations(["userloig"]),
+    // 退出
+    exit() {
+      this.$bus.$emit("exit_qq");
+      this.text_hint = "退出成功~";
+      this.is_tf = true;
+      console.log("exit");
+      this.userloig(undefined);
+      this.img_tx = require("../../assets/img/defaultheadportrait.png");
+      // 发送信息告诉Login那边退出成功
+    },
+    // 鼠标悬浮头像
+    tou() {
+      if (
+        (this.$store.state.user.id != 0) &
+        (this.$store.state.user != undefined)
+      ) {
+        this.tou_M = 1;
+      }
+    },
+    leave() {
+      this.tou_M = 2;
+    },
+    // 获取用户头像
+    getimguser(img) {
+      // console.log(this.$store.state.id_key);
+      // 判断是否直接事件总线传给了头像
+      if (img != undefined) {
+        this.img_tx = img;
+        this.img_tx_new = img;
+        console.log(this.img_tx_new);
+      } else if (this.$store.state.id_key != undefined) {
+        // 如果没有传就去vuex内看看有没有账号数据
+        this.img_tx = this.$store.state.id_key.url_img;
+      } else if (this.$store.state.id_key == undefined) {
+        this.img_tx = require("../../assets/img/defaultheadportrait.png");
+      }
+    },
     go_music() {
       this.$router.push("/music");
     },
@@ -111,12 +164,23 @@ export default {
         });
       this.zttx();
     },
+    get_sx() {
+      this.$bus.$on("gettxnose", ($event) => {
+        // this.name = $event;
+        console.log("触发了getimguser");
+        this.getimguser($event);
+      });
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
-  created() {},
+  created() {
+    this.get_sx();
+  },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.init();
+    this.getimguser();
+    // this.get_sx();
   },
   //beforeCreate() {}, //生命周期 - 创建之前
   //beforeMount() {}, //生命周期 - 挂载之前
@@ -132,9 +196,9 @@ export default {
   position: relative;
   height: 320px;
   width: 100%;
-  background: url("../../assets/img/site_head.png") no-repeat;
+  background: url("../../assets/img/site_head02.png") center center no-repeat;
   background-size: 100%;
-  background-position: top center;
+  /* background-position: top center; */
 }
 .nev {
   background-color: rgb(64, 65, 66, 0.5);
@@ -208,5 +272,69 @@ export default {
 }
 .san {
   height: 164px;
+}
+.TC_id {
+  position: fixed;
+  right: 2vw;
+  width: 3vw;
+  height: 41px;
+  /* background-color: aliceblue; */
+  z-index: 5;
+}
+.img_tx {
+  width: 35px;
+  height: 35px;
+  size: 100% 100%;
+  margin-top: 3px;
+  margin-left: 10px;
+  background-color: rgb(64, 65, 66, 0);
+  border-radius: 50%;
+}
+.img_tx:hover {
+  background-color: rgb(81, 81, 81);
+}
+.box_xla {
+  width: 4vw;
+  height: 0px;
+  /* background-color: rgba(248, 248, 248, 0.7); */
+  overflow: hidden;
+  box-shadow: 1px 1px 3px rgb(147, 147, 147);
+}
+.box_xla .list_box {
+  width: 4vw;
+  height: 30px;
+  color: rgb(0, 0, 0);
+  background-color: rgba(248, 248, 248, 0.7);
+  text-align: center;
+  line-height: 30px;
+  border-bottom: 1px solid rgb(139, 139, 139);
+}
+.go {
+  animation: 0.2s linear run;
+  animation-fill-mode: forwards;
+}
+.leave {
+  animation: 0.2s linear leave;
+  animation-fill-mode: forwards;
+}
+@keyframes run {
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: 60px;
+  }
+}
+@keyframes leave {
+  0% {
+    height: 60px;
+  }
+  100% {
+    height: 0px;
+  }
+}
+.box_xla .list_box:hover {
+  background-color: rgb(103, 103, 103);
+  color: rgb(255, 255, 255);
 }
 </style>
