@@ -64,8 +64,11 @@ export default {
         "https://api.lilinbo.cn/api/heatlist?key=83ba6fc105e044eba353a6e00fc29af1&type=weibo"
       )
       .then((res) => {
-        this.weibodata = res.data.data.list.slice(0, 19);
-        console.log(res.data.data);
+        if (res.data.status == 200) {
+          this.weibodata = res.data.data.list.slice(0, 19);
+        } else {
+          console.log("微博数据拉取失败，可能过于频繁拉取，请稍后重试");
+        }
       });
   },
   //生命周期 - 挂载完成（可以访问DOM元素）

@@ -13,3 +13,18 @@ export const pl_q=p=>get('/api/pllist',p)
 
 // 推荐文章
 export const tj_article=p=>get('/api/tuijianwz',p)
+
+// 评论
+export const comment_main=p=>get('/api/comment',p)
+// 获取评论用户信息
+export const comment_user=p=>get('/api/comment/user_img',p)
+
+//http://192.168.0.205:2000/api/comment/M_id?id=01 
+//二级评论列表
+export const comment_02=p=>get('/api/comment/M_id',p)
+
+// 添加一级评论
+export const comment_add_01=p=>get('/api/comment/add_01',p)
+
+// 添加二级评论
+export const comment_add_02=p=>get('/api/comment/add_02',p)

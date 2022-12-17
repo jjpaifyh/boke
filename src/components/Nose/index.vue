@@ -65,7 +65,7 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    ...mapMutations(["userloig"]),
+    ...mapMutations(["userloig", "id_key_loig"]),
     // 退出
     exit() {
       this.$bus.$emit("exit_qq");
@@ -73,16 +73,22 @@ export default {
       this.is_tf = true;
       console.log("exit");
       this.userloig(undefined);
+      this.id_key_loig(undefined);
       this.img_tx = require("../../assets/img/defaultheadportrait.png");
       // 发送信息告诉Login那边退出成功
+      const qq_login_exit = setTimeout(() => {
+        this.is_tf = !this.is_tf;
+      }, 2000);
     },
     // 鼠标悬浮头像
     tou() {
-      if (
-        (this.$store.state.user.id != 0) &
-        (this.$store.state.user != undefined)
-      ) {
-        this.tou_M = 1;
+      try {
+        if ("qq" in this.$store.state.user) {
+          // "qq" in this.$store.state.user && "qq" in this.$store.state.id_key
+          this.tou_M = 1;
+        }
+      } catch (error) {
+        console.log("没有登录，不可以点击");
       }
     },
     leave() {
@@ -92,16 +98,19 @@ export default {
     getimguser(img) {
       // console.log(this.$store.state.id_key);
       // 判断是否直接事件总线传给了头像
-      if (img != undefined) {
-        this.img_tx = img;
-        this.img_tx_new = img;
-        console.log(this.img_tx_new);
-      } else if (this.$store.state.id_key != undefined) {
-        // 如果没有传就去vuex内看看有没有账号数据
-        this.img_tx = this.$store.state.id_key.url_img;
-      } else if (this.$store.state.id_key == undefined) {
-        this.img_tx = require("../../assets/img/defaultheadportrait.png");
-      }
+
+      try {
+        if (img != undefined) {
+          this.img_tx = img;
+          this.img_tx_new = img;
+          console.log(this.img_tx_new);
+        } else if ("qq" in this.$store.state.user) {
+          // 如果没有传就去vuex内看看有没有账号数据
+          this.img_tx = this.$store.state.user.url_img;
+        } else {
+          this.img_tx = require("../../assets/img/defaultheadportrait.png");
+        }
+      } catch {}
     },
     go_music() {
       this.$router.push("/music");

@@ -8,11 +8,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user:{id:'0'}
+    user:{id:'0'},
+    is_dl:false,
+    // 无用属性，代码中关于id_key的一切判断都是无用的，但是暂时不用修改
+    // id_key:''
   },
   mutations: {
     userloig(state, user) {
       state.user = user
+      state.is_dl=!state.is_dl
+  },
+    id_key_loig(state, user) {
+      state.id_key = user
   },
   },
   actions: {
@@ -29,7 +36,7 @@ export default new Vuex.Store({
         reducer(val)  {
           return {
               // 只储存state中的token
-              id_key: val.user
+              user: val.user
           }
       },
         // paths: ["user"]

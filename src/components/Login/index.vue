@@ -221,13 +221,13 @@ export default {
       this.$emit("show_bj");
     },
     login_vuex_istf() {
-      if (this.$store.state.id_key != undefined) {
+      if ("qq" in this.$store.state.user) {
         console.log("vuex内有账号信息");
         // this.$emit("xg_is_show");
         // console.log(`查询成功：${res.data[0].code == 1}`);
-        console.log(this.$store.state.id_key);
-        this.avatar = this.$store.state.id_key.url_img;
-        this.name = this.$store.state.id_key.name;
+        console.log(this.$store.state.user);
+        this.avatar = this.$store.state.user.url_img;
+        this.name = this.$store.state.user.name;
         const jsq = setInterval(() => {
           this.$emit("getthem", {
             istf: true,
