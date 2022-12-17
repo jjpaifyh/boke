@@ -58,6 +58,7 @@
 import axios from "axios";
 import { nanoid } from "nanoid";
 import { qq_cx, qq_rk } from "../../request/boke/api";
+import { mapMutations } from "vuex";
 export default {
   name: "login",
   data() {
@@ -71,6 +72,7 @@ export default {
       is_donhua: true,
       avatar: "",
       name: "",
+      img_bus: "",
     };
   },
   props: {
@@ -82,9 +84,16 @@ export default {
   watch: {},
   //方法集合
   methods: {
+    ...mapMutations(["userloig"]),
     // 作者登录
     log() {
       this.is_donhua = false;
+    },
+    // 发送事件总线
+    set_ml(img_bus) {
+      console.log(img_bus);
+      this.$bus.$emit("gettxnose", img_bus);
+      console.log("set_ml");
     },
     // qq登录
     login() {
@@ -100,10 +109,18 @@ export default {
               if (res.data[0].code == 1) {
                 this.$emit("xg_is_show");
                 console.log(`查询成功：${res.data[0].code == 1}`);
-                console.log(res.data);
+                console.log(res.data[0]);
                 this.avatar = res.data[0].url_img;
                 this.name = res.data[0].name;
-                // this.is_tf = false;
+                // 存入vuex
+                // this.$store.commit("user/userloig", res.data[0]);
+                this.userloig(res.data[0]);
+                console.log(this.$store.state.user);
+                console.log(res.data[0].url_img);
+
+                let img_bus = res.data[0].url_img;
+                // 发送事件总线
+                this.set_ml(img_bus);
                 this.$emit("getthem", {
                   istf: true,
                   avatar: this.avatar,
@@ -122,6 +139,20 @@ export default {
                     if (res.data.code == 200) {
                       this.avatar = res.data.data.avatar;
                       this.name = res.data.data.name;
+                      let qq_r_vuex = {
+                        qq: this.qq,
+                        name: this.name,
+                        url_img:
+                          "https://q1.qlogo.cn/g?b=qq&nk=" + this.qq + "&s=100",
+                        token: "弃用中...",
+                      };
+                      // 存入vuex
+                      // this.$store.commit("user/userloig", res.data[0]);
+                      this.userloig(qq_r_vuex);
+                      console.log(qq_r_vuex);
+                      let img_bus = qq_r_vuex.url_img;
+                      // 发送事件总线
+                      this.set_ml(img_bus);
                       // this.is_tf = false;
                       this.$emit("getthem", {
                         istf: true,
@@ -189,12 +220,42 @@ export default {
     show_bj() {
       this.$emit("show_bj");
     },
+    login_vuex_istf() {
+      if ("qq" in this.$store.state.user) {
+        console.log("vuex内有账号信息");
+        // this.$emit("xg_is_show");
+        // console.log(`查询成功：${res.data[0].code == 1}`);
+        console.log(this.$store.state.user);
+        this.avatar = this.$store.state.user.url_img;
+        this.name = this.$store.state.user.name;
+        const jsq = setInterval(() => {
+          this.$emit("getthem", {
+            istf: true,
+            avatar: this.avatar,
+            name: this.name,
+            tit: "欢迎回来~",
+          });
+        }, 1000);
+      }
+    },
+    exit() {
+      console.log("LOGIN");
+      this.is_donhua = !this.is_donhua;
+    },
+    bus_init() {
+      this.$bus.$on("exit_qq", ($event) => {
+        this.exit();
+      });
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
-  created() {},
+  created() {
+    this.bus_init();
+  },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.getspan();
+    this.login_vuex_istf();
   },
   //beforeCreate() {}, //生命周期 - 创建之前
   //beforeMount() {}, //生命周期 - 挂载之前

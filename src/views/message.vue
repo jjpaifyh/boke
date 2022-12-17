@@ -10,11 +10,15 @@
     </div>
     <div class="box_pl">
       <comment
-        :avatar="textpl.avatar"
-        :commentNum="textpl.commentNum"
-        :authorId="textpl.authorId"
-        :label="textpl.label"
-        :commentList="textpl.commentList"
+        :avatar="data.avatar"
+        :comment-num="data.commentNum"
+        :placeholder="placeholder"
+        :author-id="data.authorId"
+        :label="data.label"
+        :comment-list="data.commentList"
+        @doSend="comment"
+        @doChidSend="reply"
+        v-if="data.commentList.length != 0"
       ></comment>
     </div>
   </div>
@@ -23,58 +27,28 @@
   <script>
 // https://gitee.com/bright-boy/bright-comment
 import comment from "bright-comment";
+import {
+  comment_main,
+  comment_user,
+  comment_02,
+  comment_add_01,
+  qq_cx,
+  comment_add_02,
+} from "../request/boke/api.js";
+import axios from "axios";
+import { json } from "body-parser";
 
 export default {
-  name: "",
   data() {
     return {
-      textpl: {
-        // 头像
-        avatar:
-          "http://thirdqq.qlogo.cn/g?b=sdk&k=CXQicDo1avw5q82A8NfCKOQ&s=100&t=1586483094?rand=1605000166",
-        commentNum: 2,
-        authorId: "id",
-        label: "小鹏",
-        commentList: [
-          {
-            id: "01",
-            commentUser: {
-              id: "02",
-              nickName: "无敌霸王龙",
-              avatar:
-                "http://thirdqq.qlogo.cn/g?b=sdk&k=CXQicDo1avw5q82A8NfCKOQ&s=100&t=1586483094?rand=1605000166",
-            },
-            targetUser: {
-              id: "000",
-              nickName: "博客作者",
-              avatar:
-                "http://thirdqq.qlogo.cn/g?b=sdk&k=CXQicDo1avw5q82A8NfCKOQ&s=100&t=1586483094?rand=1605000166",
-            },
-            content: "你真可爱",
-            createDate: "2020/10/21",
-            childrenList: [
-              {
-                id: "02",
-                commentUser: {
-                  id: "02",
-                  nickName: "可爱小伟龙",
-                  avatar:
-                    "https://tse3-mm.cn.bing.net/th/id/OIP-C.JPaFw0vH2f6Qy44aUfZ4jgAAAA?pid=ImgDet&rs=1",
-                },
-                targetUser: {
-                  id: "02",
-                  nickName: "无敌霸王龙",
-                  avatar:
-                    "http://thirdqq.qlogo.cn/g?b=sdk&k=CXQicDo1avw5q82A8NfCKOQ&s=100&t=1586483094?rand=1605000166",
-                },
-                content: "你真可爱",
-                createDate: "2020/10/21",
-                childrenList: [],
-              },
-            ],
-          },
-        ],
-      },
+      name: "",
+      user: {},
+      qq: "",
+      textpl: {},
+      // beiyon: {},
+      data: {},
+      placeholder: "您的鼓励是我前进的动力！",
+      commentData: {},
     };
   },
   components: {
@@ -85,11 +59,149 @@ export default {
   //监控data中的数据变化
   watch: {},
   //方法集合
-  methods: {},
+  methods: {
+    get_user() {
+      if ("qq" in this.$store.state.user) {
+        this.user.qq = this.$store.state.user.qq;
+        this.user.name = this.$store.state.user.name;
+        this.user.url_img = this.$store.state.user.url_img;
+        qq_cx({ qq: this.user.qq }).then((res) => {
+          this.user.id = res.data[0].id;
+          this.$store.state.user.id = res.data[0].id;
+        });
+      }
+      // console.log(this.user);
+    },
+    // 对拿到的数据进行处理
+    async data_textpl_init() {
+      // 一级处理
+
+      // 一级评论固定评论博客作者
+      let boke_00 = {
+        id: "000",
+        nickName: "博客作者",
+        avatar:
+          "http://thirdqq.qlogo.cn/g?b=sdk&k=CXQicDo1avw5q82A8NfCKOQ&s=100&t=1586483094?rand=1605000166",
+      };
+      let data_comment = [];
+      // 发请求拿数据
+      await comment_main().then((res) => {
+        data_comment = res.data;
+      });
+      // 获取用户数据
+      await data_comment.forEach((v) => {
+        // console.log(v.commentUser);
+        comment_user({ id: v.commentUser }).then((res) => {
+          // console.log(res.data[0].name);
+          let user = {
+            id: v.commentUser,
+            nickName: res.data[0].name,
+            avatar: res.data[0].url_img,
+          };
+          v.commentUser = user;
+          v.targetUser = boke_00;
+        });
+      });
+      // console.log(data_comment);
+      // https://blog.csdn.net/chendongpu/article/details/117331757
+      // 添加二级评论
+      let list_prmis = [];
+      for (let i = 0; i < data_comment.length; i++) {
+        let zhuru = data_comment.length - 1;
+        let v = data_comment[i];
+        comment_02({ id: v.id }).then((data) => {
+          for (let j = 0; j < data.data.length; j++) {
+            let vs = data.data[j];
+            let a = new Promise((reslove, reject) => {
+              comment_user({ id: vs.commentUser }).then((res) => {
+                let user = {
+                  id: vs.commentUser,
+                  nickName: res.data[0].name,
+                  avatar: res.data[0].url_img,
+                };
+                vs.commentUser = user;
+                reslove(res);
+              });
+            });
+            let b = new Promise((reslove, reject) => {
+              comment_user({ id: vs.targetUser }).then((res) => {
+                let targetUseruser = {
+                  id: vs.targetUser,
+                  nickName: res.data[0].name,
+                  avatar: res.data[0].url_img,
+                };
+                vs.targetUser = targetUseruser;
+                reslove(res);
+              });
+            });
+            list_prmis.push(a);
+            list_prmis.push(b);
+            // delete vs.id;
+          }
+
+          Promise.all(list_prmis).then((res) => {
+            v.childrenList = data.data;
+            // console.log(res);
+            // console.log("查看结果");
+            // console.log(data_comment);
+
+            if (zhuru == i) {
+              let textpl = {
+                // 头像
+                avatar: this.user.url_img,
+                commentNum: data_comment.length,
+                authorId: 193016309,
+                label: "小鹏",
+                commentList: data_comment,
+              };
+              // console.log(this.textpl);
+              this.textpl = textpl;
+              // const str = JSON.stringify(this.textpl, null, 4);
+
+              // print JSON string
+              // console.log(str);
+
+              this.data = textpl;
+            }
+          });
+        });
+      }
+    },
+    // 发出一级评论
+    comment(content) {
+      // 设置评论的基本信息
+      this.commentData.content = content;
+      this.commentData.targetUser = "000";
+      this.commentData.createDate = new Date().toLocaleString();
+      this.commentData.commentUser = this.$store.state.user.id;
+      comment_add_01(this.commentData).then((v) => {
+        console.log("成功执行");
+      });
+      // console.log(this.commentData);
+      this.data_textpl_init();
+    },
+    // 发出二级评论
+    reply(content, bid, pid) {
+      // 设置评论的基本信息
+      this.commentData.content = content;
+      this.commentData.createDate = new Date().toLocaleString();
+      this.commentData.targetUser = bid;
+      this.commentData.commentUser = this.$store.state.user.id;
+      this.commentData.messageboard_id = pid;
+      comment_add_02(this.commentData).then((res) => {
+        // console.log(res);
+      });
+      this.data_textpl_init();
+      // console.log(this.commentData);
+    },
+  },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
+  mounted() {
+    this.get_user();
+    this.data_textpl_init();
+  },
   //beforeCreate() {}, //生命周期 - 创建之前
   //beforeMount() {}, //生命周期 - 挂载之前
   //beforeUpdate() {}, //生命周期 - 更新之前
@@ -167,5 +279,8 @@ export default {
   font-weight: 700;
   color: #82f5f1;
   text-shadow: 1px 1px 0 #2260b1;
+}
+.hbl-fa {
+  background-color: aliceblue;
 }
 </style>

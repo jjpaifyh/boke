@@ -121,8 +121,10 @@ export default {
         // console.log(this.input);
         this.listdata = [];
         // listdata.length
-        let url = `https://api.pingcc.cn/video/search/title/${this.input}/1/30`;
-        this.urlvuex = `https://api.pingcc.cn/video/search/title/${this.input}`;
+        let url = `https://api.pingc.cn/video/search/title/${this.input}/1/30`;
+        this.urlvuex = `https://api.pingc.cn/video/search/title/${this.input}`;
+        // https://api.pingcc.cn/video/search/title/复仇者联盟/1/10
+
         this.is_tf = false;
         // console.log(url);
         this.is_jz = true;
