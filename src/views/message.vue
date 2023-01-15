@@ -35,8 +35,6 @@ import {
   qq_cx,
   comment_add_02,
 } from "../request/boke/api.js";
-import axios from "axios";
-import { json } from "body-parser";
 
 export default {
   data() {

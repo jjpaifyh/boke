@@ -45,6 +45,8 @@ import {
     CarouselItem,
     Drawer,
     Loading,
+    RadioGroup,
+    Radio
 
 } from 'element-ui'
 Vue.use(Button)
@@ -89,6 +91,8 @@ Vue.use(TimelineItem)
 Vue.use(Carousel)
 Vue.use(CarouselItem)
 Vue.use(Drawer)
+Vue.use(RadioGroup)
+Vue.use(Radio)
 Vue.prototype.$Message = Message
 Vue.prototype.$confirm = MessageBox.confirm
 // Vue.prototype.$loading=Loading

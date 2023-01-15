@@ -1,8 +1,7 @@
 <template>
-  <div
-    :class="top_TF ? 'show_top dropDown ' : 'dropDown go_F '"
-    @click="top_go($event)"
-  ></div>
+  <div :class="top_TF ? ' dropDown goend ' : 'dropDown go_F '">
+    <div class="box_tops" @click="top_go($event)"></div>
+  </div>
 </template>
 
 <script>
@@ -34,7 +33,7 @@ export default {
   methods: {
     // 回到顶部
     top_go(e) {
-      e.target.classList.add("go");
+      // e.target.classList.add("go");
       this.is_TF = false;
       // 返回顶部,有bug！！！！！！！！！！！
       const top_date = setInterval(() => {
@@ -81,15 +80,19 @@ export default {
 </script>
 <style scoped>
 .dropDown {
-  width: 3vw;
-  height: 3vw;
+  /* width: 3vw;
+  height: 3vw; */
+  width: 5vw;
+  height: 128vh;
   /* background-color: rgb(103, 101, 99); */
-  background: url("../..//assets/img/top.png") no-repeat;
+  /* background: url("../..//assets/img/top.png") no-repeat; */
   background-size: 100%;
   position: fixed;
   bottom: 8vh;
   left: 90vw;
   z-index: 100;
+  background-image: url("../../assets/img/scroll.png");
+  background-repeat: no-repeat;
 }
 .show_top {
   display: none;
@@ -100,27 +103,37 @@ export default {
   animation-name: top_run_f;
   /* 持续时间 */
   animation-duration: 1s;
+  animation-fill-mode: forwards;
 }
 @keyframes top_run_f {
   0% {
     transform: translateY(-100vh);
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(0vh);
   }
 }
-.go {
+.goend {
   /* 调用动画 */
   animation-name: top_run;
   /* 持续时间 */
   animation-duration: 1s;
+  animation-fill-mode: forwards;
 }
 @keyframes top_run {
   0% {
-    transform: translateY(0);
+    transform: translateY(0vh);
   }
   100% {
     transform: translateY(-100vh);
   }
+}
+.box_tops {
+  width: 5vw;
+  height: 8vw;
+  /* background-color: blue; */
+  z-index: 10000;
+  position: absolute;
+  bottom: 0;
 }
 </style>

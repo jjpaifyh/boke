@@ -1,5 +1,6 @@
 <template>
-  <div class="listdata" @click="go_Article()">
+  <!-- @click="go_Article()" -->
+  <div class="listdata">
     <div class="text_img">
       <img v-lazy="'http://localhost:2000' + data.tp_path" alt="123" />
       <div class="box_text">
@@ -22,22 +23,21 @@
     </div>
     <div class="ico">
       <a class="left-ico"
-        ><i class="fa iconfont">&#xe639;</i>
-        {{ data.date_start.split("T")[0] }}</a
+        ><i class="el-icon-time"></i> {{ data.date_start.split("T")[0] }}</a
+      >
+      <a class="left-ico">
+        <i class="el-icon-star-on"></i>{{ data.like }}次点赞</a
       >
       <a class="left-ico"
-        ><i class="fa iconfont">&#xe661;</i> {{ data.like }}</a
+        ><i class="el-icon-view"></i> {{ data.look_num }}次阅读</a
       >
       <a class="left-ico"
-        ><i class="fa iconfont"> &#xe610;</i> {{ data.look_num }}次阅读</a
+        ><i class="el-icon-chat-dot-square"></i> {{ data.comment }}条评论</a
       >
       <a class="left-ico"
-        ><i class="fa iconfont">&#xe639;</i> {{ data.comment }}人点赞</a
+        ><i class="el-icon-user-solid"></i> {{ data.author_key }}</a
       >
-      <a class="left-ico"
-        ><i class="fa iconfont">&#xe639;</i> {{ data.author_key }}</a
-      >
-      <a class="flsex"><i class="fa iconfont">&#xeca1;</i> 查看更多></a>
+      <a class="flsex"><i class="el-icon-collection-tag"></i> 查看更多></a>
     </div>
   </div>
 </template>
@@ -57,18 +57,16 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    go_Article() {
-      console.log(this.data.id);
-      this.$router.push({
-        path: `/Article/${this.data.id}`,
-      });
+    init() {
       window.scrollTo(0, 0);
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
+  mounted() {
+    this.init();
+  },
 };
 </script>
 <style scoped>
