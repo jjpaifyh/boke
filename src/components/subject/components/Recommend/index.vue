@@ -18,7 +18,12 @@
       </div>
     </div>
     <div class="tjwb" v-show="id == 0">
-      <div class="box iconfont" v-for="(k, index) in data" :key="index">
+      <div
+        class="box iconfont"
+        v-for="(k, index) in data"
+        :key="index"
+        @click="go_ar(k.id)"
+      >
         &#xe661;&nbsp;&nbsp;
         {{ k.title }}
       </div>
@@ -53,11 +58,18 @@ export default {
     click(num) {
       this.id = num;
     },
+    go_ar(id) {
+      console.log(id);
+      let path = "/Article/" + id;
+      this.$router.push(path);
+    },
   },
+
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
     tj_article().then((res) => {
       this.data = res.data;
+      // console.log(res.data);
     });
     axios
       .get(

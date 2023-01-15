@@ -26,6 +26,9 @@
       <div class="iconfont" @click="go_end()">&#xe614;关于</div>
     </div>
     <div class="TC_id" @click="tou" @mouseleave="leave">
+      <el-button class="wj" type="primary" size="mini" round @click="C_MD"
+        >新建文章</el-button
+      >
       <img class="img_tx" :src="img_tx" alt="" />
       <div :class="['box_xla', tou_M == 1 ? 'go' : 'leave']">
         <div class="list_box">权限ID</div>
@@ -113,16 +116,29 @@ export default {
       } catch {}
     },
     go_music() {
-      this.$router.push("/music");
+      // this.$router.push("/music");
+      let routeurl = this.$router.resolve({
+        path: "/music",
+      });
+      window.open(routeurl.href, "_blank");
     },
     goGame() {
-      this.$router.push("/Game");
+      let routeurl = this.$router.resolve({
+        path: "/Game",
+      });
+      window.open(routeurl.href, "_blank");
     },
     go_Cartoon() {
-      this.$router.push("/Cartoon");
+      let routeurl = this.$router.resolve({
+        path: "/Cartoon",
+      });
+      window.open(routeurl.href, "_blank");
     },
     go_PrettyPictures() {
-      this.$router.push("/PrettyPictures");
+      let routeurl = this.$router.resolve({
+        path: "/PrettyPictures",
+      });
+      window.open(routeurl.href, "_blank");
     },
     sy() {
       this.$router.push("/");
@@ -131,7 +147,7 @@ export default {
       this.$router.push("/message");
     },
     go_end() {
-      this.$router.push("/gy");
+      this.$router.push("/MyH5");
     },
     zttx() {
       // 字段特效
@@ -179,6 +195,9 @@ export default {
         console.log("触发了getimguser");
         this.getimguser($event);
       });
+    },
+    C_MD() {
+      this.$router.push("/Creation");
     },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
@@ -345,5 +364,10 @@ export default {
 .box_xla .list_box:hover {
   background-color: rgb(103, 103, 103);
   color: rgb(255, 255, 255);
+}
+.wj {
+  position: absolute;
+  right: 4vw;
+  top: 6px;
 }
 </style>

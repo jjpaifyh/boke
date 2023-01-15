@@ -101,7 +101,7 @@ export default {
     transform: translateY(-100vh);
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(0vh);
   }
 }
 .go {
@@ -112,7 +112,7 @@ export default {
 }
 @keyframes top_run {
   0% {
-    transform: translateY(0);
+    transform: translateY(0vh);
   }
   100% {
     transform: translateY(-100vh);

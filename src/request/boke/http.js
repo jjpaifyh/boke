@@ -5,7 +5,7 @@ axios.defaults.timeout = 10000;
 // // 请求头设置
 // application/x-www-form-urlencoded;charset=UTF-8
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.baseURL = 'http://192.168.0.205:2000';
+axios.defaults.baseURL = 'http://localhost:2000';
 //  // 先导入vuex,因为我们要使用到里面的状态对象
 // // vuex的路径根据自己的路径去写
 // import store from '@/store/index';
