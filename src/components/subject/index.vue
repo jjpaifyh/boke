@@ -23,6 +23,15 @@
         :data="k"
         @click.native="go_article(k.id)"
       />
+      <el-pagination
+        class="pagd"
+        background
+        layout="prev, pager, next"
+        :total="pagelist"
+        @current-change="change"
+        :current-page="num"
+      >
+      </el-pagination>
       <img src="../../assets/img/qsy.png" class="img_qsy" v-show="is_tf" />
     </div>
     <div>
@@ -33,7 +42,12 @@
 <script>
 import MyList from "./components/MyList";
 import ListData from "./components/ListData";
-import { listhome, search_v1, newArticleLike } from "@/request/boke/api.js";
+import {
+  listhome,
+  search_v1,
+  newArticleLike,
+  pagedata,
+} from "@/request/boke/api.js";
 export default {
   name: "index",
   data() {
@@ -42,6 +56,8 @@ export default {
       data: "",
       is_show: true,
       is_tf: false,
+      pagelist: 100,
+      num: 1,
     };
   },
   components: {
@@ -75,7 +91,7 @@ export default {
       }
     },
     clear() {
-      listhome().then((res) => {
+      pagedata({ page: 1 }).then((res) => {
         this.list_home_data = res.data;
       });
       this.height_main();
@@ -104,21 +120,34 @@ export default {
     height_main_f() {
       document.querySelector(".mian").style.setProperty("--height_h", "1200px");
     },
+
+    change(currentPage) {
+      console.log("change");
+      // console.log(currentPage);
+      // 请数据
+      pagedata({ page: currentPage }).then((res) => {
+        // console.log(res.data);
+        this.list_home_data = res.data;
+      });
+    },
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
-    listhome().then((res) => {
-      this.list_home_data = res.data;
-    });
+    this.clear();
     // 绑定enter事件
     this.enterKeyup();
+    // 获取文章总条数
+    listhome().then((res) => {
+      this.pagelist = res.data.length;
+    });
   },
   destroyed() {
     // 销毁enter事件
     this.enterKeyupDestroyed();
   },
+
   //beforeCreate() {}, //生命周期 - 创建之前
   //beforeMount() {}, //生命周期 - 挂载之前
   //beforeUpdate() {}, //生命周期 - 更新之前
@@ -207,5 +236,11 @@ export default {
 .ele {
   position: relative;
   left: -23px;
+}
+.pagd {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

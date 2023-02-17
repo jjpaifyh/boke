@@ -197,7 +197,9 @@ router.beforeEach((to,from,next)=>{
     next()
   }else {
     if(store.state.user.id==0){
-      alert('请登录之后再操作！')
+      // alert(this)
+      // console.log(Vue.prototype.$Message);
+      Vue.prototype.$Message('请先登录账号！')
       router.push('/')
     }
     next()

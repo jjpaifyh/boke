@@ -67,3 +67,6 @@ export const Compile=p=>get('/api/Compile',p)
 
 // 删除文章文章
 export const articleDelete=p=>get('/api/articleDelete',p)
+
+// 首页请求指定页面数据
+export const pagedata=p=>get('/api/page',p)
